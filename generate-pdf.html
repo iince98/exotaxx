@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>JS PDF Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <style>
+        body { font-family: sans-serif; margin: 40px; background-color: #f9f9f9; }
+        .card { max-width: 400px; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #218838; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>PDF erstellen (JS)</h2>
+    <input type="text" id="kundenname" placeholder="Name des Kunden" required>
+    <textarea id="nachricht" rows="4" placeholder="Ihre Nachricht..."></textarea>
+    <button onclick="generatePDF()">PDF Herunterladen</button>
+</div>
+
+<script>
+    async function generatePDF() {
+        // Access the library
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Get Input Values
+        const name = document.getElementById('kundenname').value || "Gast";
+        const msg = document.getElementById('nachricht').value || "";
+
+        // Add Content
+        doc.setFontSize(20);
+        doc.text("Kunden-Dokument", 20, 20);
+        
+        doc.setFontSize(12);
+        doc.text(`Name: ${name}`, 20, 40);
+        doc.text("Nachricht:", 20, 50);
+        
+        // Multi-line text support
+        const splitMsg = doc.splitTextToSize(msg, 170);
+        doc.text(splitMsg, 20, 60);
+
+        // Save/Download the PDF
+        doc.save(`${name}_dokument.pdf`);
+    }
+</script>
+
+</body>
+</html>
