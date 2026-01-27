@@ -2,50 +2,84 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>JS PDF Generator</title>
+    <title>JS PDF mit Unterschrift</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
     <style>
-        body { font-family: sans-serif; margin: 40px; background-color: #f9f9f9; }
-        .card { max-width: 400px; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        button:hover { background: #218838; }
+        body { font-family: sans-serif; margin: 40px; background-color: #f4f7f6; }
+        .card { max-width: 500px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin: auto; }
+        label { font-weight: bold; display: block; margin-top: 15px; }
+        input, textarea { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin-top: 20px; }
+        button:hover { background: #0056b3; }
+        .hint { font-size: 0.85em; color: #666; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>PDF erstellen (JS)</h2>
-    <input type="text" id="kundenname" placeholder="Name des Kunden" required>
-    <textarea id="nachricht" rows="4" placeholder="Ihre Nachricht..."></textarea>
-    <button onclick="generatePDF()">PDF Herunterladen</button>
+    <h2>Dokument Erstellen</h2>
+    
+    <label>Name des Kunden:</label>
+    <input type="text" id="kundenname" placeholder="z.B. Max Mustermann">
+
+    <label>Nachricht:</label>
+    <textarea id="nachricht" rows="4" placeholder="Ihr Text hier..."></textarea>
+
+    <label>Unterschrift hochladen (Bild):</label>
+    <input type="file" id="signatureInput" accept="image/*">
+    <p class="hint">Erlaubt: JPG, PNG oder WEBP</p>
+
+    <button onclick="generatePDF()">PDF mit Unterschrift speichern</button>
 </div>
 
 <script>
+    function readFileAsDataURL(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
+
     async function generatePDF() {
-        // Access the library
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-
-        // Get Input Values
-        const name = document.getElementById('kundenname').value || "Gast";
+        
+        const name = document.getElementById('kundenname').value || "Unbekannt";
         const msg = document.getElementById('nachricht').value || "";
+        const sigFile = document.getElementById('signatureInput').files[0];
 
-        // Add Content
-        doc.setFontSize(20);
-        doc.text("Kunden-Dokument", 20, 20);
+        // 1. Header & Text
+        doc.setFontSize(22);
+        doc.text("Bestätigung", 20, 20);
         
         doc.setFontSize(12);
-        doc.text(`Name: ${name}`, 20, 40);
-        doc.text("Nachricht:", 20, 50);
+        doc.text(`Ausgestellt für: ${name}`, 20, 40);
         
-        // Multi-line text support
+        doc.text("Inhalt:", 20, 55);
         const splitMsg = doc.splitTextToSize(msg, 170);
-        doc.text(splitMsg, 20, 60);
+        doc.text(splitMsg, 20, 65);
 
-        // Save/Download the PDF
-        doc.save(`${name}_dokument.pdf`);
+        // 2. Add Signature if uploaded
+        if (sigFile) {
+            try {
+                const imageData = await readFileAsDataURL(sigFile);
+                
+                // Position after the text
+                const yPos = 100; 
+                doc.text("Unterschrift:", 20, yPos);
+                
+                // addImage(data, format, x, y, width, height)
+                doc.addImage(imageData, 'PNG', 20, yPos + 5, 50, 25);
+            } catch (error) {
+                console.error("Fehler beim Laden des Bildes:", error);
+                alert("Fehler beim Verarbeiten der Unterschrift.");
+            }
+        }
+
+        // 3. Download
+        doc.save(`Dokument_${name}.pdf`);
     }
 </script>
 
