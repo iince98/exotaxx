@@ -1,45 +1,72 @@
 <?php
+// Fehlerberichterstattung einschalten, falls etwas schief geht
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+if (!file_exists('fpdf.php')) {
+    die("Fehler: fpdf.php wurde nicht im Verzeichnis gefunden. Bitte laden Sie die Datei hoch.");
+}
+
 require('fpdf.php');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['customer_name'])) {
-    // 1. Capture Input
-    $name = htmlspecialchars($_POST['customer_name']);
-    $message = htmlspecialchars($_POST['message']);
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['kundenname'])) {
+    
+    // Eingaben bereinigen
+    $name = $_POST['kundenname'];
+    $nachricht = $_POST['nachricht'];
 
-    // 2. Initialize FPDF
+    // PDF Initialisieren
     $pdf = new FPDF();
     $pdf->AddPage();
-    
-    // 3. Add Content
     $pdf->SetFont('Arial', 'B', 16);
-    $pdf->Cell(40, 10, 'Customer Receipt');
-    $pdf->Ln(20); // Line break
+
+    // UTF-8 zu ISO-8859-1 konvertieren für Umlaute (ä, ö, ü, ß)
+    $titel = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', 'Kundenbestätigung');
+    $label_name = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', 'Kundenname: ');
+    $label_text = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', 'Nachricht: ');
     
+    $pdf->Cell(0, 10, $titel, 0, 1, 'C');
+    $pdf->Ln(10);
+
     $pdf->SetFont('Arial', '', 12);
-    $pdf->Cell(0, 10, "Customer Name: " . $name, 0, 1);
-    $pdf->MultiCell(0, 10, "Message: " . $message);
-    
-    // 4. Output/Download
-    $pdf->Output('D', 'Customer_Document.pdf'); 
+    $pdf->Cell(0, 10, $label_name . iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $name), 0, 1);
+    $pdf->Ln(5);
+    $pdf->Cell(0, 10, $label_text, 0, 1);
+    $pdf->MultiCell(0, 10, iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $nachricht));
+
+    // PDF zum Download schicken
+    $pdf->Output('D', 'Kunden_Dokument.pdf');
     exit;
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-    <title>PDF Test Endpoint</title>
+    <meta charset="UTF-8">
+    <title>PDF Generator Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; line-height: 1.6; }
+        .container { max-width: 500px; background: #f4f4f4; padding: 20px; border-radius: 8px; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; }
+        button { background: #007bff; color: white; padding: 10px 15px; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
 </head>
 <body>
-    <h2>PDF Generator Test</h2>
+
+<div class="container">
+    <h2>PDF-Erstellung Test</h2>
     <form method="post">
-        <label>Name:</label><br>
-        <input type="text" name="customer_name" required><br><br>
+        <label>Name des Kunden:</label>
+        <input type="text" name="kundenname" placeholder="z.B. Max Mustermann" required>
         
-        <label>Message:</label><br>
-        <textarea name="message"></textarea><br><br>
+        <label>Ihre Nachricht (Umlaute möglich):</label>
+        <textarea name="nachricht" rows="5" placeholder="Geben Sie hier Text ein..."></textarea>
         
-        <button type="submit">Generate & Download PDF</button>
+        <button type="submit">PDF Generieren & Herunterladen</button>
     </form>
+</div>
+
 </body>
 </html>
