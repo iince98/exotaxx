@@ -47,7 +47,7 @@
                                 <i class="fal fa-lightbulb-on"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Unternehmensberatung</a></h5>
+                                <h5><a href="services.php">Unternehmensberatung</a></h5>
                                
                           
                             </div>
@@ -59,7 +59,7 @@
                                 <i class="fal fa-analytics"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Existenz- und Unternehmensgründung</a></h5>
+                                <h5><a href="services.php">Existenz- und Unternehmensgründung</a></h5>
                                 
                              
                             </div>
@@ -71,7 +71,7 @@
                                 <i class="fal fa-shield-check"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Allg. Finanz- und Lohnbuchhaltung</a></h5>
+                                <h5><a href="services.php">Allg. Finanz- und Lohnbuchhaltung</a></h5>
                        
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                                 <i class="fal fa-chart-pie-alt"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Finanzbuchhaltung</a></h5>
+                                <h5><a href="services.php">Finanzbuchhaltung</a></h5>
                                
                      
                             </div>
@@ -94,7 +94,7 @@
                                 <i class="fal fa-sack-dollar"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Lohnbuchhaltung</a></h5>
+                                <h5><a href="services.php">Lohnbuchhaltung</a></h5>
                                 
                              
                             </div>
@@ -106,7 +106,7 @@
                                 <i class="fal fa-calculator"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Rechnungswesen</a></h5>
+                                <h5><a href="services.php">Rechnungswesen</a></h5>
                                
                              
                             </div>
@@ -119,7 +119,7 @@
                                 <i class="fal fa-lightbulb-on"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Buchhaltungsdienste</a></h5>
+                                <h5><a href="services.php">Buchhaltungsdienste</a></h5>
                                
                            
                             </div>
@@ -131,7 +131,7 @@
                                 <i class="fal fa-analytics"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Unternehmensbuchführung</a></h5>
+                                <h5><a href="services.php">Unternehmensbuchführung</a></h5>
                                 
                                
                             </div>
@@ -143,7 +143,7 @@
                                 <i class="fal fa-shield-check"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Erstellen der Laufenden Lohn- und Gehaltsabrechnungen</a></h5>
+                                <h5><a href="services.php">Erstellen der Laufenden Lohn- und Gehaltsabrechnungen</a></h5>
                                 
                               
                             </div>
@@ -155,7 +155,7 @@
                                 <i class="fal fa-chart-pie-alt"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Debitoren- und Kreditorenüberwachung</a></h5>
+                                <h5><a href="services.php">Debitoren- und Kreditorenüberwachung</a></h5>
                                
                             
                             </div>
@@ -167,7 +167,7 @@
                                 <i class="fal fa-sack-dollar"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Erstellung von Betriebswirtschaftlichen und buchhalterischen Auswertungen</a></h5>
+                                <h5><a href="services.php">Erstellung von Betriebswirtschaftlichen und buchhalterischen Auswertungen</a></h5>
                                 
                                
                             </div>
@@ -179,7 +179,7 @@
                                 <i class="fal fa-calculator"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Sekretariatsdienste</a></h5>
+                                <h5><a href="services.php">Sekretariatsdienste</a></h5>
                                
                             </div>
                         </div>
@@ -192,7 +192,7 @@
                                 <i class="fal fa-lightbulb-on"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Schreibdienste</a></h5>
+                                <h5><a href="services.php">Schreibdienste</a></h5>
                                
                                
                             </div>
@@ -204,7 +204,7 @@
                                 <i class="fal fa-analytics"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Hol- und Bringservice Ihrer Unterlagen- nach Vereinbarung</a></h5>
+                                <h5><a href="services.php">Hol- und Bringservice Ihrer Unterlagen- nach Vereinbarung</a></h5>
                                 
                                
                             </div>
@@ -216,7 +216,7 @@
                                 <i class="fal fa-shield-check"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Anträge Lohnfortzahlungen
+                                <h5><a href="services.php">Anträge Lohnfortzahlungen
                                 </a></h5>
                                 
                                
@@ -229,7 +229,7 @@
                                 <i class="fal fa-chart-pie-alt"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Unterstützung in Buchhalterischen Fragestellungen</a></h5>
+                                <h5><a href="services.php">Unterstützung in Buchhalterischen Fragestellungen</a></h5>
                               
                             </div>
                         </div>
@@ -240,7 +240,7 @@
                                 <i class="fal fa-sack-dollar"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Buchen der laufenden Geschäftsvorfälle der Finanzbuchhaltung</a></h5>
+                                <h5><a href="services.php">Buchen der laufenden Geschäftsvorfälle der Finanzbuchhaltung</a></h5>
                                 
                             </div>
                         </div>
@@ -264,7 +264,7 @@
                                 <i class="fal fa-calculator"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Förderprogramm für EU-Projekte</a></h5>
+                                <h5><a href="services.php">Förderprogramm für EU-Projekte</a></h5>
                                
                                
                             </div>
@@ -277,7 +277,7 @@
                                 <i class="fal fa-calculator"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Bürodienstleistungen</h5>
+                                <h5><a href="services.php">Bürodienstleistungen</h5>
                                
                                
                             </div>
@@ -290,7 +290,7 @@
                                 <i class="fal fa-calculator"></i>
                             </div>
                             <div class="services-content2">
-                                <h5><a href="services.html">Buchführungswesen</h5>
+                                <h5><a href="services.php">Buchführungswesen</h5>
                                
                                
                             </div>
