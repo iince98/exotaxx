@@ -121,6 +121,8 @@ try {
     $message = "--" . $boundary . "\r\n";
     $message .= "Content-Type: text/html; charset=UTF-8\r\n";
     $message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
+
+
     
     // Simple HTML body for testing
     $htmlBody = "
@@ -180,12 +182,34 @@ try {
     $message .= $htmlBody . "\r\n\r\n";
     
     // PDF attachment
+    // ... (Previous logic for generating $htmlBody and the main PDF attachment)
+
+    // 1. Attach the generated Questionnaire PDF (from Base64)
     $message .= "--" . $boundary . "\r\n";
     $message .= "Content-Type: application/pdf; name=\"Personalfragebogen_" . date('Y-m-d') . ".pdf\"\r\n";
     $message .= "Content-Transfer-Encoding: base64\r\n";
     $message .= "Content-Disposition: attachment; filename=\"Personalfragebogen_" . date('Y-m-d') . ".pdf\"\r\n\r\n";
     $message .= chunk_split(base64_encode($pdfData)) . "\r\n";
-    
+
+    // 2. NEW: Attach additional uploaded files from the user
+    if (isset($_FILES['attachments'])) {
+        foreach ($_FILES['attachments']['tmp_name'] as $key => $tmpName) {
+            if ($_FILES['attachments']['error'][$key] === UPLOAD_ERR_OK) {
+                $fileName = $_FILES['attachments']['name'][$key];
+                $fileType = $_FILES['attachments']['type'][$key];
+                $fileContent = file_get_contents($tmpName);
+                
+                $message .= "--" . $boundary . "\r\n";
+                $message .= "Content-Type: $fileType; name=\"$fileName\"\r\n";
+                $message .= "Content-Transfer-Encoding: base64\r\n";
+                $message .= "Content-Disposition: attachment; filename=\"$fileName\"\r\n\r\n";
+                $message .= chunk_split(base64_encode($fileContent)) . "\r\n";
+                
+                debugLog("Attached extra file: $fileName");
+            }
+        }
+    }
+
     // End of message
     $message .= "--" . $boundary . "--";
     

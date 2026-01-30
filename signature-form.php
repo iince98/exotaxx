@@ -1131,6 +1131,17 @@ include 'header.php';
                         </div>
                     </div>
 
+                    <div class="form-section">
+                        <h2>📎 Zusätzliche Dokumente (Additional Documents)</h2>
+                        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">
+                            Laden Sie hier zusätzliche Dokumente hoch (z.B. Ausweiskopie, Krankenkassenkarte, etc.)
+                        </p>
+                        <div class="form-group">
+                            <input type="file" id="additionalFiles" name="additionalFiles[]" multiple accept=".pdf,.jpg,.jpeg,.png">
+                            <div id="fileList" style="margin-top: 10px; font-size: 13px;"></div>
+                        </div>
+                    </div>
+
                     <div class="submit-section">
                         <button type="submit" class="btn btn-primary">Generate PDF Document</button>
                     </div>
@@ -1567,37 +1578,43 @@ include 'header.php';
     }
 
     function sendEmail() {
-        if (!generatedPDF) {
-            alert("No PDF available");
-            return;
-        }
-
-        // Convert PDF to base64
-        const pdfBase64 = generatedPDF.output("datauristring").split(",")[1];
-
-        // Create form data
-        const formDataToSend = new FormData();
-        formDataToSend.append("name", formData.familienname + ", " + formData.vorname);
-        formDataToSend.append("email", formData.email || "");
-        formDataToSend.append("pdf", pdfBase64);
-
-        // Send via AJAX
-        fetch("assets/php/signature-email.php", {
-            method: "POST",
-            body: formDataToSend
-        })
-        .then(response => response.text())
-        .then(data => {
-            alert(data);
-            closeModal();
-            location.reload();
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Error sending email. Please try again.");
-        });
+    if (!generatedPDF) {
+        alert("No PDF available");
+        return;
     }
 
+    const pdfBase64 = generatedPDF.output("datauristring").split(",")[1];
+    const formDataToSend = new FormData();
+    
+    // Add basic info
+    formDataToSend.append("name", formData.familienname + ", " + formData.vorname);
+    formDataToSend.append("email", formData.email || "");
+    formDataToSend.append("pdf", pdfBase64);
+
+    // NEW: Add additional uploaded files
+    const fileInput = document.getElementById('additionalFiles');
+    for (let i = 0; i < fileInput.files.length; i++) {
+        formDataToSend.append('attachments[]', fileInput.files[i]);
+    }
+
+    fetch("assets/php/signature-email.php", {
+        method: "POST",
+        body: formDataToSend
+    })
+    .then(response => response.json()) // Updated to expect JSON
+    .then(data => {
+        if(data.success) {
+            alert("Erfolgreich gesendet!");
+            location.reload();
+        } else {
+            alert("Fehler: " + data.message);
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Error sending email.");
+    });
+}
     function closeModal() {
         document.getElementById("successModal").style.display = "none";
         location.reload();
