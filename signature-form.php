@@ -153,6 +153,123 @@ $custom_css = '
         text-align: center;
     }
 
+    /* File Upload Section */
+    .file-upload-section {
+        margin-top: 30px;
+        padding: 25px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border-left: 4px solid #667eea;
+    }
+
+    .file-upload-section h3 {
+        color: #667eea;
+        font-size: 18px;
+        margin-bottom: 15px;
+        font-weight: 700;
+    }
+
+    .file-upload-area {
+        border: 3px dashed #d0d0d0;
+        border-radius: 10px;
+        padding: 40px;
+        text-align: center;
+        transition: all 0.3s;
+        background: white;
+        cursor: pointer;
+        margin-bottom: 20px;
+    }
+
+    .file-upload-area:hover {
+        border-color: #667eea;
+        background: #f8f9ff;
+    }
+
+    .file-upload-area.dragover {
+        border-color: #667eea;
+        background: #f0f3ff;
+    }
+
+    .file-upload-icon {
+        font-size: 48px;
+        margin-bottom: 15px;
+        color: #667eea;
+    }
+
+    #additionalFiles {
+        display: none;
+    }
+
+    .file-list {
+        margin-top: 15px;
+    }
+
+    .file-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 15px;
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        transition: all 0.3s;
+    }
+
+    .file-item:hover {
+        border-color: #667eea;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+    }
+
+    .file-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+    }
+
+    .file-icon {
+        font-size: 24px;
+        color: #667eea;
+    }
+
+    .file-details {
+        flex: 1;
+    }
+
+    .file-name {
+        font-weight: 600;
+        color: #333;
+        font-size: 14px;
+        margin-bottom: 2px;
+    }
+
+    .file-size {
+        font-size: 12px;
+        color: #6c757d;
+    }
+
+    .file-remove {
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .file-remove:hover {
+        background: #c82333;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+    }
+
     .signature-section {
         margin-top: 30px;
         padding: 25px;
@@ -294,92 +411,22 @@ $custom_css = '
         color: white;
         font-size: 16px;
         padding: 15px 40px;
+        margin-top: 30px;
+        width: 100%;
     }
 
     .btn-primary:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
     }
 
     .btn-primary:disabled {
-        opacity: 0.5;
+        opacity: 0.6;
         cursor: not-allowed;
         transform: none;
     }
 
-    .submit-section {
-        margin-top: 30px;
-        text-align: center;
-    }
-
-    .error {
-        color: #dc3545;
-        font-size: 13px;
-        margin-top: 5px;
-        display: none;
-    }
-
-    .success-message {
-        background: #d4edda;
-        color: #155724;
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        display: none;
-    }
-
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.7);
-        animation: fadeIn 0.3s;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    .modal-content {
-        background: white;
-        margin: 5% auto;
-        padding: 30px;
-        border-radius: 15px;
-        max-width: 500px;
-        text-align: center;
-        animation: slideIn 0.3s;
-    }
-
-    @keyframes slideIn {
-        from { transform: translateY(-50px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
-
-    .modal-buttons {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-        margin-top: 20px;
-    }
-
-    .btn-download, .btn-email {
-        flex: 1;
-        background: white;
-        color: #667eea;
-        border: 2px solid #667eea;
-    }
-
-    .btn-download:hover, .btn-email:hover {
-        background: #667eea;
-        color: white;
-    }
-
-    .loading {
+    #loading {
         display: none;
         text-align: center;
         padding: 40px;
@@ -389,10 +436,10 @@ $custom_css = '
         border: 4px solid #f3f3f3;
         border-top: 4px solid #667eea;
         border-radius: 50%;
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
         animation: spin 1s linear infinite;
-        margin: 0 auto;
+        margin: 0 auto 20px;
     }
 
     @keyframes spin {
@@ -400,19 +447,86 @@ $custom_css = '
         100% { transform: rotate(360deg); }
     }
 
-    .employer-note {
-        background: #fff3cd;
-        border: 1px solid #ffc107;
-        padding: 10px 15px;
-        border-radius: 6px;
-        font-size: 12px;
-        color: #856404;
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        max-width: 500px;
+        text-align: center;
+        animation: slideIn 0.3s;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .success-icon {
+        font-size: 64px;
+        color: #28a745;
+        margin-bottom: 20px;
+    }
+
+    .modal-content h2 {
+        color: #333;
         margin-bottom: 15px;
     }
 
+    .modal-content p {
+        color: #6c757d;
+        margin-bottom: 30px;
+    }
+
+    .btn-success {
+        background: #28a745;
+        color: white;
+        padding: 12px 30px;
+        margin: 5px;
+    }
+
+    .btn-success:hover {
+        background: #218838;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    }
+
+    .error-message {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 5px;
+        display: none;
+    }
+
     @media (max-width: 768px) {
-        .form-row {
-            grid-template-columns: 1fr;
+        .signature-container {
+            margin: 20px;
+        }
+
+        .form-content {
+            padding: 20px;
+        }
+
+        .form-section {
+            padding: 15px;
         }
 
         .time-distribution {
@@ -421,7 +535,7 @@ $custom_css = '
 
         #signatureCanvas {
             width: 100%;
-            height: 150px;
+            height: auto;
         }
     }
 </style>
@@ -431,818 +545,492 @@ $custom_css = '
 include 'header.php'; 
 ?>
 
-<!-- Page Content -->
-<section class="contact-area pt-120 pb-120" style="background: #f6faff;">
-    <div class="container">
-        <div class="signature-container">
-            <div class="signature-header">
-                <h1>Personalfragebogen für Mitarbeiter</h1>
-                <p>Employee Questionnaire - Please fill out all required fields carefully</p>
-            </div>
+<div class="signature-container">
+    <div class="signature-header">
+        <h1>📋 Personalfragebogen für Mitarbeiter</h1>
+        <p>Bitte füllen Sie alle erforderlichen Felder aus</p>
+    </div>
 
-            <div class="form-content">
-                <div class="success-message" id="successMessage"></div>
-
-                <div class="employer-note">
-                    <strong>Hinweis:</strong> Dieser Personalfragebogen dient zur Vorerfassung von Personaldaten für das DATEV-Lohnabrechnungsprogramm.
+    <div class="form-content">
+        <form id="personalForm" method="POST">
+            <!-- Personal Information Section -->
+            <div class="form-section">
+                <h2>📝 Persönliche Angaben</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Firma</label>
+                        <input type="text" name="firma" placeholder="Firma eingeben">
+                    </div>
+                    <div class="form-group">
+                        <label>Personalnummer</label>
+                        <input type="text" name="personalnummer" placeholder="Personalnummer">
+                    </div>
                 </div>
 
-                <form id="personalForm">
-                    <!-- Personal Information -->
-                    <div class="form-section">
-                        <h2>📋 Persönliche Angaben (Personal Information)</h2>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="firma">Firma (Company)</label>
-                                <input type="text" id="firma" name="firma">
-                            </div>
-                            <div class="form-group">
-                                <label for="personalnummer">Personalnummer (Employee Number)</label>
-                                <input type="text" id="personalnummer" name="personalnummer">
-                            </div>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nachname <span class="required">*</span></label>
+                        <input type="text" name="familienname" placeholder="Nachname" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Geburtsname</label>
+                        <input type="text" name="geburtsname" placeholder="Geburtsname">
+                    </div>
+                </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="familienname">Familienname (Last Name) <span class="required">*</span></label>
-                                <input type="text" id="familienname" name="familienname" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="geburtsname">ggf. Geburtsname (Birth Name)</label>
-                                <input type="text" id="geburtsname" name="geburtsname">
-                            </div>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Vorname <span class="required">*</span></label>
+                        <input type="text" name="vorname" placeholder="Vorname" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Geburtsdatum <span class="required">*</span></label>
+                        <input type="date" name="geburtsdatum" required>
+                    </div>
+                </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="vorname">Vorname (First Name) <span class="required">*</span></label>
-                                <input type="text" id="vorname" name="vorname" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="geburtsdatum">Geburtsdatum (Date of Birth) <span class="required">*</span></label>
-                                <input type="date" id="geburtsdatum" name="geburtsdatum" required>
-                            </div>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label>Straße und Hausnummer <span class="required">*</span></label>
+                        <input type="text" name="strasse" placeholder="Straße und Hausnummer" required>
+                    </div>
+                </div>
 
-                        <div class="form-row">
-                            <div class="form-group full-width">
-                                <label for="strasse">Straße und Hausnummer (Street and Number) <span class="required">*</span></label>
-                                <input type="text" id="strasse" name="strasse" required>
-                            </div>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>PLZ <span class="required">*</span></label>
+                        <input type="text" name="plz" placeholder="PLZ" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ort <span class="required">*</span></label>
+                        <input type="text" name="ort" placeholder="Ort" required>
+                    </div>
+                </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="plz">PLZ (Postal Code) <span class="required">*</span></label>
-                                <input type="text" id="plz" name="plz" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="ort">Ort (City) <span class="required">*</span></label>
-                                <input type="text" id="ort" name="ort" required>
-                            </div>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>E-Mail (für Benachrichtigungen) <span class="required">*</span></label>
+                        <input type="email" name="customer_email" id="customer_email" placeholder="ihre.email@beispiel.de" required>
+                        <small style="color: #6c757d; font-size: 12px;">An diese Adresse wird eine Bestätigung gesendet</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input type="tel" name="telefon" placeholder="+49 123 456789">
+                    </div>
+                </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Geschlecht (Gender) <span class="required">*</span></label>
-                                <div class="radio-group">
-                                    <div class="radio-item">
-                                        <input type="radio" id="geschlecht_m" name="geschlecht" value="männlich" required>
-                                        <label for="geschlecht_m">Männlich (Male)</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="geschlecht_w" name="geschlecht" value="weiblich">
-                                        <label for="geschlecht_w">Weiblich (Female)</label>
-                                    </div>
-                                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Geschlecht</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="geschlecht_m" name="geschlecht" value="Männlich">
+                                <label for="geschlecht_m">Männlich</label>
                             </div>
-                            <div class="form-group">
-                                <label for="staatsangehoerigkeit">Staatsangehörigkeit (Nationality)</label>
-                                <input type="text" id="staatsangehoerigkeit" name="staatsangehoerigkeit">
+                            <div class="radio-item">
+                                <input type="radio" id="geschlecht_w" name="geschlecht" value="Weiblich">
+                                <label for="geschlecht_w">Weiblich</label>
                             </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="versicherungsnummer">Versicherungsnummer (Insurance Number)</label>
-                                <input type="text" id="versicherungsnummer" name="versicherungsnummer">
-                            </div>
-                            <div class="form-group">
-                                <label for="geburtsort">Geburtsort, -land (Place of Birth)</label>
-                                <input type="text" id="geburtsort" name="geburtsort" placeholder="nur bei fehlender Versicherungs-Nr.">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Schwerbehindert (Severely Disabled)</label>
-                                <div class="radio-group">
-                                    <div class="radio-item">
-                                        <input type="radio" id="schwerbehindert_ja" name="schwerbehindert" value="ja">
-                                        <label for="schwerbehindert_ja">Ja (Yes)</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="schwerbehindert_nein" name="schwerbehindert" value="nein" checked>
-                                        <label for="schwerbehindert_nein">Nein (No)</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="arbeitnehmernummer">Arbeitnehmernummer Sozialkasse Bau</label>
-                                <input type="text" id="arbeitnehmernummer" name="arbeitnehmernummer">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="iban">IBAN <span class="required">*</span></label>
-                                <input type="text" id="iban" name="iban" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="bic">BIC</label>
-                                <input type="text" id="bic" name="bic">
+                            <div class="radio-item">
+                                <input type="radio" id="geschlecht_d" name="geschlecht" value="Divers">
+                                <label for="geschlecht_d">Divers</label>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Employment Information -->
-                    <div class="form-section">
-                        <h2>💼 Beschäftigung (Employment)</h2>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="eintrittsdatum">Eintrittsdatum (Start Date) <span class="required">*</span></label>
-                                <input type="date" id="eintrittsdatum" name="eintrittsdatum" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="ersteintrittsdatum">Ersteintrittsdatum (First Entry Date)</label>
-                                <input type="date" id="ersteintrittsdatum" name="ersteintrittsdatum">
-                            </div>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Staatsangehörigkeit</label>
+                        <input type="text" name="staatsangehoerigkeit" placeholder="z.B. Deutsch">
+                    </div>
+                    <div class="form-group">
+                        <label>Versicherungsnummer</label>
+                        <input type="text" name="versicherungsnummer" placeholder="Versicherungsnummer">
+                    </div>
+                </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="beschaeftigungsbetrieb">Beschäftigungsbetrieb (Workplace)</label>
-                                <input type="text" id="beschaeftigungsbetrieb" name="beschaeftigungsbetrieb">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Geburtsort</label>
+                        <input type="text" name="geburtsort" placeholder="Geburtsort">
+                    </div>
+                    <div class="form-group">
+                        <label>Schwerbehindert</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="schwerbehindert_ja" name="schwerbehindert" value="Ja">
+                                <label for="schwerbehindert_ja">Ja</label>
                             </div>
-                            <div class="form-group">
-                                <label for="berufsbezeichnung">Berufsbezeichnung (Job Title)</label>
-                                <input type="text" id="berufsbezeichnung" name="berufsbezeichnung">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group full-width">
-                                <label for="ausgeuebte_taetigkeit">Ausgeübte Tätigkeit (Position/Activity)</label>
-                                <input type="text" id="ausgeuebte_taetigkeit" name="ausgeuebte_taetigkeit">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Art der Beschäftigung (Type of Employment)</label>
-                                <div class="radio-group">
-                                    <div class="radio-item">
-                                        <input type="radio" id="haupt" name="beschaeftigungsart" value="Hauptbeschäftigung" checked>
-                                        <label for="haupt">Hauptbeschäftigung (Main)</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="neben" name="beschaeftigungsart" value="Nebenbeschäftigung">
-                                        <label for="neben">Nebenbeschäftigung (Secondary)</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Probezeit (Probation Period)</label>
-                                <div class="radio-group">
-                                    <div class="radio-item">
-                                        <input type="radio" id="probezeit_ja" name="probezeit" value="ja">
-                                        <label for="probezeit_ja">Ja (Yes)</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="probezeit_nein" name="probezeit" value="nein" checked>
-                                        <label for="probezeit_nein">Nein (No)</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="probezeit_dauer">Dauer der Probezeit (Duration)</label>
-                                <input type="text" id="probezeit_dauer" name="probezeit_dauer" placeholder="z.B. 6 Monate">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Weitere Beschäftigungen? (Other Employments?)</label>
-                                <div class="radio-group">
-                                    <div class="radio-item">
-                                        <input type="radio" id="weitere_ja" name="weitere_beschaeftigung" value="ja">
-                                        <label for="weitere_ja">Ja (Yes)</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="weitere_nein" name="weitere_beschaeftigung" value="nein" checked>
-                                        <label for="weitere_nein">Nein (No)</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Geringfügige Beschäftigung? (Marginal Employment?)</label>
-                                <div class="radio-group">
-                                    <div class="radio-item">
-                                        <input type="radio" id="geringfuegig_ja" name="geringfuegig" value="ja">
-                                        <label for="geringfuegig_ja">Ja (Yes)</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="geringfuegig_nein" name="geringfuegig" value="nein" checked>
-                                        <label for="geringfuegig_nein">Nein (No)</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="wochenarbeitszeit">Wöchentliche Arbeitszeit (Weekly Hours) <span class="required">*</span></label>
-                                <input type="number" id="wochenarbeitszeit" name="wochenarbeitszeit" step="0.5" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Arbeitszeit (Working Time)</label>
-                                <div class="radio-group">
-                                    <div class="radio-item">
-                                        <input type="radio" id="vollzeit" name="arbeitszeit_typ" value="Vollzeit" checked>
-                                        <label for="vollzeit">Vollzeit (Full-time)</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="teilzeit" name="arbeitszeit_typ" value="Teilzeit">
-                                        <label for="teilzeit">Teilzeit (Part-time)</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group full-width">
-                            <label>Verteilung der wöchentlichen Arbeitszeit (Weekly Hour Distribution)</label>
-                            <div class="time-distribution">
-                                <div class="day-input">
-                                    <label for="mo">Mo</label>
-                                    <input type="number" id="mo" name="mo" step="0.5" min="0" max="24">
-                                </div>
-                                <div class="day-input">
-                                    <label for="di">Di</label>
-                                    <input type="number" id="di" name="di" step="0.5" min="0" max="24">
-                                </div>
-                                <div class="day-input">
-                                    <label for="mi">Mi</label>
-                                    <input type="number" id="mi" name="mi" step="0.5" min="0" max="24">
-                                </div>
-                                <div class="day-input">
-                                    <label for="do">Do</label>
-                                    <input type="number" id="do" name="do" step="0.5" min="0" max="24">
-                                </div>
-                                <div class="day-input">
-                                    <label for="fr">Fr</label>
-                                    <input type="number" id="fr" name="fr" step="0.5" min="0" max="24">
-                                </div>
-                                <div class="day-input">
-                                    <label for="sa">Sa</label>
-                                    <input type="number" id="sa" name="sa" step="0.5" min="0" max="24">
-                                </div>
-                                <div class="day-input">
-                                    <label for="so">So</label>
-                                    <input type="number" id="so" name="so" step="0.5" min="0" max="24">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="urlaubsanspruch">Urlaubsanspruch (Vacation Days)</label>
-                                <input type="number" id="urlaubsanspruch" name="urlaubsanspruch" placeholder="Kalenderjahr">
-                            </div>
-                            <div class="form-group">
-                                <label for="baugewerbe_seit">Im Baugewerbe beschäftigt seit</label>
-                                <input type="date" id="baugewerbe_seit" name="baugewerbe_seit">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="kostenstelle">Kostenstelle (Cost Center)</label>
-                                <input type="text" id="kostenstelle" name="kostenstelle">
-                            </div>
-                            <div class="form-group">
-                                <label for="abt_nummer">Abteilungsnummer (Dept. Number)</label>
-                                <input type="text" id="abt_nummer" name="abt_nummer">
-                            </div>
-                            <div class="form-group">
-                                <label for="personengruppe">Personengruppe (Personnel Group)</label>
-                                <input type="text" id="personengruppe" name="personengruppe">
+                            <div class="radio-item">
+                                <input type="radio" id="schwerbehindert_nein" name="schwerbehindert" value="Nein">
+                                <label for="schwerbehindert_nein">Nein</label>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Education -->
-                    <div class="form-section">
-                        <h2>🎓 Ausbildung (Education)</h2>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Höchster Schulabschluss (Highest School Degree)</label>
-                                <select id="schulabschluss" name="schulabschluss">
-                                    <option value="">Bitte wählen...</option>
-                                    <option value="ohne">Ohne Schulabschluss</option>
-                                    <option value="haupt">Haupt-/Volksschulabschluss</option>
-                                    <option value="mittlere">Mittlere Reife/gleichwertiger Abschluss</option>
-                                    <option value="abitur">Abitur/Fachabitur</option>
-                                </select>
-                            </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>IBAN</label>
+                        <input type="text" name="iban" placeholder="DE89370400440532013000">
+                    </div>
+                    <div class="form-group">
+                        <label>BIC</label>
+                        <input type="text" name="bic" placeholder="COBADEFFXXX">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Employment Section -->
+            <div class="form-section">
+                <h2>💼 Beschäftigung</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Eintrittsdatum <span class="required">*</span></label>
+                        <input type="date" name="eintrittsdatum" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Beschäftigungsbetrieb</label>
+                        <input type="text" name="beschaeftigungsbetrieb" placeholder="Betrieb">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Berufsbezeichnung</label>
+                        <input type="text" name="berufsbezeichnung" placeholder="z.B. Buchhalter">
+                    </div>
+                    <div class="form-group">
+                        <label>Ausgeübte Tätigkeit</label>
+                        <input type="text" name="ausgeuebte_taetigkeit" placeholder="Tätigkeit">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Art der Beschäftigung</label>
+                        <select name="beschaeftigungsart">
+                            <option value="">Bitte wählen...</option>
+                            <option value="Vollzeit">Vollzeit</option>
+                            <option value="Teilzeit">Teilzeit</option>
+                            <option value="Geringfügig">Geringfügig</option>
+                            <option value="Aushilfe">Aushilfe</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Probezeit (Monate)</label>
+                        <input type="number" name="probezeit" placeholder="z.B. 6">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Wöchentliche Arbeitszeit (Std.)</label>
+                        <input type="number" name="wochenarbeitszeit" placeholder="40" step="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label>Arbeitszeit-Typ</label>
+                        <select name="arbeitszeit_typ">
+                            <option value="">Bitte wählen...</option>
+                            <option value="Fest">Fest</option>
+                            <option value="Flexibel">Flexibel</option>
+                            <option value="Schichtarbeit">Schichtarbeit</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Stundenverteilung pro Woche</label>
+                    <div class="time-distribution">
+                        <div class="day-input">
+                            <label>Mo</label>
+                            <input type="number" name="mo" placeholder="0" step="0.5" min="0">
                         </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Höchste Berufsausbildung (Highest Vocational Training)</label>
-                                <select id="berufsausbildung" name="berufsausbildung">
-                                    <option value="">Bitte wählen...</option>
-                                    <option value="ohne">Ohne beruflichen Ausbildungsabschluss</option>
-                                    <option value="anerkannt">Anerkannte Berufsausbildung</option>
-                                    <option value="meister">Meister/Techniker/gleichwertiger Fachschulabschluss</option>
-                                    <option value="bachelor">Bachelor</option>
-                                    <option value="diplom">Diplom/Magister/Master/Staatsexamen</option>
-                                    <option value="promotion">Promotion</option>
-                                </select>
-                            </div>
+                        <div class="day-input">
+                            <label>Di</label>
+                            <input type="number" name="di" placeholder="0" step="0.5" min="0">
                         </div>
+                        <div class="day-input">
+                            <label>Mi</label>
+                            <input type="number" name="mi" placeholder="0" step="0.5" min="0">
+                        </div>
+                        <div class="day-input">
+                            <label>Do</label>
+                            <input type="number" name="do" placeholder="0" step="0.5" min="0">
+                        </div>
+                        <div class="day-input">
+                            <label>Fr</label>
+                            <input type="number" name="fr" placeholder="0" step="0.5" min="0">
+                        </div>
+                        <div class="day-input">
+                            <label>Sa</label>
+                            <input type="number" name="sa" placeholder="0" step="0.5" min="0">
+                        </div>
+                        <div class="day-input">
+                            <label>So</label>
+                            <input type="number" name="so" placeholder="0" step="0.5" min="0">
+                        </div>
+                    </div>
+                </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="ausbildung_beginn">Beginn der Ausbildung (Training Start)</label>
-                                <input type="date" id="ausbildung_beginn" name="ausbildung_beginn">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Urlaubsanspruch (Tage/Jahr)</label>
+                        <input type="number" name="urlaubsanspruch" placeholder="30">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education Section -->
+            <div class="form-section">
+                <h2>🎓 Ausbildung</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Schulabschluss</label>
+                        <select name="schulabschluss">
+                            <option value="">Bitte wählen...</option>
+                            <option value="Hauptschulabschluss">Hauptschulabschluss</option>
+                            <option value="Realschulabschluss">Realschulabschluss</option>
+                            <option value="Fachabitur">Fachabitur</option>
+                            <option value="Abitur">Abitur</option>
+                            <option value="Ohne Abschluss">Ohne Abschluss</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Berufsausbildung</label>
+                        <input type="text" name="berufsausbildung" placeholder="z.B. Kaufmann/-frau">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ausbildungsbeginn</label>
+                        <input type="date" name="ausbildung_beginn">
+                    </div>
+                    <div class="form-group">
+                        <label>Ausbildungsende</label>
+                        <input type="date" name="ausbildung_ende">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tax Section -->
+            <div class="form-section">
+                <h2>💶 Steuer</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Steuer-Identifikationsnummer</label>
+                        <input type="text" name="steuer_id" placeholder="12345678901">
+                    </div>
+                    <div class="form-group">
+                        <label>Finanzamt-Nummer</label>
+                        <input type="text" name="finanzamt_nr" placeholder="Finanzamt-Nr.">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Steuerklasse</label>
+                        <select name="steuerklasse">
+                            <option value="">Bitte wählen...</option>
+                            <option value="I">I</option>
+                            <option value="II">II</option>
+                            <option value="III">III</option>
+                            <option value="IV">IV</option>
+                            <option value="V">V</option>
+                            <option value="VI">VI</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Kinderfreibeträge</label>
+                        <input type="number" name="kinderfreibetraege" placeholder="0" step="0.5" min="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Konfession</label>
+                        <select name="konfession">
+                            <option value="">Bitte wählen...</option>
+                            <option value="Evangelisch">Evangelisch (ev)</option>
+                            <option value="Katholisch">Katholisch (rk)</option>
+                            <option value="Keine">Keine</option>
+                            <option value="Sonstige">Sonstige</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Insurance Section -->
+            <div class="form-section">
+                <h2>🏥 Sozialversicherung</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Krankenkasse</label>
+                        <input type="text" name="krankenkasse" placeholder="Name der Krankenkasse">
+                    </div>
+                    <div class="form-group">
+                        <label>Elterneigenschaft</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="eltern_ja" name="elterneigenschaft" value="Ja">
+                                <label for="eltern_ja">Ja</label>
                             </div>
-                            <div class="form-group">
-                                <label for="ausbildung_ende">Voraussichtliches Ende (Expected End)</label>
-                                <input type="date" id="ausbildung_ende" name="ausbildung_ende">
+                            <div class="radio-item">
+                                <input type="radio" id="eltern_nein" name="elterneigenschaft" value="Nein">
+                                <label for="eltern_nein">Nein</label>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Contract Terms -->
-                    <div class="form-section">
-                        <h2>📝 Befristung (Contract Terms)</h2>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Arbeitsverhältnis befristet? (Fixed-term Contract?)</label>
-                                <div class="radio-group">
-                                    <div class="radio-item">
-                                        <input type="radio" id="befristet_ja" name="befristet" value="ja">
-                                        <label for="befristet_ja">Ja (Yes)</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="befristet_nein" name="befristet" value="nein" checked>
-                                        <label for="befristet_nein">Nein (No)</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="befristung_datum">Befristung zum (Contract End Date)</label>
-                                <input type="date" id="befristung_datum" name="befristung_datum">
-                            </div>
-                        </div>
+            <!-- Compensation Section -->
+            <div class="form-section">
+                <h2>💰 Entlohnung</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Bezeichnung 1</label>
+                        <input type="text" name="lohn_bezeichnung1" placeholder="z.B. Grundgehalt">
+                    </div>
+                    <div class="form-group">
+                        <label>Betrag 1 (€)</label>
+                        <input type="number" name="lohn_betrag1" placeholder="3000" step="0.01">
+                    </div>
+                </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="vertrag_abschluss">Abschluss Arbeitsvertrag am (Contract Date)</label>
-                                <input type="date" id="vertrag_abschluss" name="vertrag_abschluss">
-                            </div>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Bezeichnung 2</label>
+                        <input type="text" name="lohn_bezeichnung2" placeholder="z.B. Bonus">
+                    </div>
+                    <div class="form-group">
+                        <label>Betrag 2 (€)</label>
+                        <input type="number" name="lohn_betrag2" placeholder="500" step="0.01">
+                    </div>
+                </div>
 
-                        <div class="form-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="bea_widerspruch" name="bea_widerspruch">
-                                <label for="bea_widerspruch">Ich widerspreche der elektronischen Übermittlung von Bescheinigungen (I object to electronic transmission)</label>
-                            </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Stundenlohn (€)</label>
+                        <input type="number" name="stundenlohn" placeholder="15.50" step="0.01">
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Upload Section -->
+            <div class="file-upload-section">
+                <h3>📎 Zusätzliche Dokumente</h3>
+                <p style="color: #6c757d; margin-bottom: 15px; font-size: 14px;">
+                    Fügen Sie weitere Dokumente hinzu (z.B. Lebenslauf, Zeugnisse, Zertifikate)
+                </p>
+                
+                <div class="file-upload-area" id="fileUploadArea">
+                    <div class="file-upload-icon">📁</div>
+                    <p style="margin: 0 0 10px 0; font-weight: 600;">Dateien hochladen</p>
+                    <p style="margin: 0; color: #6c757d; font-size: 14px;">
+                        Klicken Sie hier oder ziehen Sie Dateien hierher
+                    </p>
+                    <p style="margin: 10px 0 0 0; color: #6c757d; font-size: 12px;">
+                        Alle Dateitypen sind erlaubt
+                    </p>
+                </div>
+                
+                <input type="file" id="additionalFiles" multiple accept="*/*">
+                
+                <div id="fileList" class="file-list"></div>
+            </div>
+
+            <!-- Signature Section -->
+            <div class="signature-section">
+                <h3>✍️ Unterschrift <span class="required">*</span></h3>
+                
+                <div class="signature-tabs">
+                    <button type="button" class="tab-btn active" data-tab="draw">Zeichnen</button>
+                    <button type="button" class="tab-btn" data-tab="upload">Hochladen</button>
+                </div>
+
+                <!-- Draw Tab -->
+                <div class="tab-content active" id="drawTab">
+                    <div class="canvas-container">
+                        <canvas id="signatureCanvas" width="600" height="200"></canvas>
+                        <div class="canvas-controls">
+                            <button type="button" class="btn btn-clear" onclick="clearCanvas()">Löschen</button>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Tax Information -->
-                    <div class="form-section">
-                        <h2>💰 Steuer (Tax Information)</h2>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="steuer_id">Steuerliche Identifikationsnummer <span class="required">*</span></label>
-                                <input type="text" id="steuer_id" name="steuer_id" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="finanzamt_nr">Finanzamt-Nr.</label>
-                                <input type="text" id="finanzamt_nr" name="finanzamt_nr">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="steuerklasse">Steuerklasse/Faktor (Tax Class)</label>
-                                <input type="text" id="steuerklasse" name="steuerklasse">
-                            </div>
-                            <div class="form-group">
-                                <label for="kinderfreibetraege">Kinderfreibeträge (Child Allowances)</label>
-                                <input type="number" id="kinderfreibetraege" name="kinderfreibetraege" step="0.5" min="0">
-                            </div>
-                            <div class="form-group">
-                                <label for="konfession">Konfession (Religion)</label>
-                                <select id="konfession" name="konfession">
-                                    <option value="">Bitte wählen...</option>
-                                    <option value="ev">Evangelisch</option>
-                                    <option value="rk">Römisch-Katholisch</option>
-                                    <option value="keine">Keine</option>
-                                    <option value="andere">Andere</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Social Insurance -->
-                    <div class="form-section">
-                        <h2>🏥 Sozialversicherung (Social Insurance)</h2>
-                        
-                        <div class="form-row">
-                            <div class="form-group full-width">
-                                <label for="krankenkasse">Gesetzliche Krankenkasse (Health Insurance)</label>
-                                <input type="text" id="krankenkasse" name="krankenkasse" placeholder="bei PKV: letzte gesetzliche Krankenkasse">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Elterneigenschaft (Parental Status)</label>
-                                <div class="radio-group">
-                                    <div class="radio-item">
-                                        <input type="radio" id="eltern_ja" name="elterneigenschaft" value="ja">
-                                        <label for="eltern_ja">Ja (Yes)</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="eltern_nein" name="elterneigenschaft" value="nein" checked>
-                                        <label for="eltern_nein">Nein (No)</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="kv">KV (Health Insurance Status)</label>
-                                <input type="text" id="kv" name="kv">
-                            </div>
-                            <div class="form-group">
-                                <label for="rv">RV (Pension Insurance)</label>
-                                <input type="text" id="rv" name="rv">
-                            </div>
-                            <div class="form-group">
-                                <label for="av">AV (Unemployment Insurance)</label>
-                                <input type="text" id="av" name="av">
-                            </div>
-                            <div class="form-group">
-                                <label for="pv">PV (Care Insurance)</label>
-                                <input type="text" id="pv" name="pv">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="uv_gefahrentarif">UV-Gefahrentarif</label>
-                                <input type="text" id="uv_gefahrentarif" name="uv_gefahrentarif">
-                            </div>
-                            <div class="form-group">
-                                <label for="deuev_status">DEÜV-Status</label>
-                                <input type="text" id="deuev_status" name="deuev_status">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Compensation -->
-                    <div class="form-section">
-                        <h2>💵 Entlohnung (Compensation)</h2>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="lohn_bezeichnung1">Bezeichnung (Description)</label>
-                                <input type="text" id="lohn_bezeichnung1" name="lohn_bezeichnung1" placeholder="z.B. Grundgehalt">
-                            </div>
-                            <div class="form-group">
-                                <label for="lohn_betrag1">Betrag (Amount)</label>
-                                <input type="number" id="lohn_betrag1" name="lohn_betrag1" step="0.01">
-                            </div>
-                            <div class="form-group">
-                                <label for="lohn_gueltig1">Gültig ab (Valid from)</label>
-                                <input type="date" id="lohn_gueltig1" name="lohn_gueltig1">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="lohn_bezeichnung2">Bezeichnung 2</label>
-                                <input type="text" id="lohn_bezeichnung2" name="lohn_bezeichnung2">
-                            </div>
-                            <div class="form-group">
-                                <label for="lohn_betrag2">Betrag 2</label>
-                                <input type="number" id="lohn_betrag2" name="lohn_betrag2" step="0.01">
-                            </div>
-                            <div class="form-group">
-                                <label for="stundenlohn">Stundenlohn (Hourly Wage)</label>
-                                <input type="number" id="stundenlohn" name="stundenlohn" step="0.01">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- VWL (Capital Formation) -->
-                    <div class="form-section">
-                        <h2>📊 Vermögenswirksame Leistungen (VWL)</h2>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="vwl_empfaenger">Empfänger VWL (VWL Recipient)</label>
-                                <input type="text" id="vwl_empfaenger" name="vwl_empfaenger">
-                            </div>
-                            <div class="form-group">
-                                <label for="vwl_betrag">Betrag (Amount)</label>
-                                <input type="number" id="vwl_betrag" name="vwl_betrag" step="0.01">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="vwl_ag_anteil">AG-Anteil (Employer Share)</label>
-                                <input type="number" id="vwl_ag_anteil" name="vwl_ag_anteil" step="0.01">
-                            </div>
-                            <div class="form-group">
-                                <label for="vwl_seit">Seit wann (Since)</label>
-                                <input type="date" id="vwl_seit" name="vwl_seit">
-                            </div>
-                            <div class="form-group">
-                                <label for="vwl_vertragsnr">Vertragsnr. (Contract No.)</label>
-                                <input type="text" id="vwl_vertragsnr" name="vwl_vertragsnr">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="vwl_iban">IBAN</label>
-                                <input type="text" id="vwl_iban" name="vwl_iban">
-                            </div>
-                            <div class="form-group">
-                                <label for="vwl_bic">BIC</label>
-                                <input type="text" id="vwl_bic" name="vwl_bic">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Documents Checklist -->
-                    <div class="form-section">
-                        <h2>📄 Arbeitspapiere (Employment Documents)</h2>
-                        
-                        <div class="checkbox-group" style="flex-direction: column;">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="doc_arbeitsvertrag" name="doc_arbeitsvertrag">
-                                <label for="doc_arbeitsvertrag">Arbeitsvertrag liegt vor (Employment contract available)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="doc_lst" name="doc_lst">
-                                <label for="doc_lst">Bescheinigung über LSt.-Abzug liegt vor (Tax deduction certificate)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="doc_sv" name="doc_sv">
-                                <label for="doc_sv">SV-Ausweis liegt vor (Social security card)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="doc_krankenkasse" name="doc_krankenkasse">
-                                <label for="doc_krankenkasse">Mitgliedsbescheinigung Krankenkasse liegt vor (Health insurance certificate)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="doc_pkv" name="doc_pkv">
-                                <label for="doc_pkv">Bescheinigung der privaten Krankenversicherung liegt vor (Private health insurance cert.)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="doc_vwl" name="doc_vwl">
-                                <label for="doc_vwl">VWL Vertrag liegt vor (VWL contract available)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="doc_eltern" name="doc_eltern">
-                                <label for="doc_eltern">Nachweis Elterneigenschaft liegt vor (Parental status proof)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="doc_altersversorgung" name="doc_altersversorgung">
-                                <label for="doc_altersversorgung">Vertrag Betriebliche Altersversorgung liegt vor (Pension contract)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="doc_schwerbehindert" name="doc_schwerbehindert">
-                                <label for="doc_schwerbehindert">Schwerbehindertenausweis liegt vor (Disability ID)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="doc_sozialkasse" name="doc_sozialkasse">
-                                <label for="doc_sozialkasse">Unterlagen Sozialkasse Bau/Maler liegt vor (Construction social fund documents)</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Previous Employment -->
-                    <div class="form-section">
-                        <h2>📅 Vorbeschäftigungszeiten (Previous Employment)</h2>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="vorbesch_von">Zeitraum von (Period from)</label>
-                                <input type="date" id="vorbesch_von" name="vorbesch_von">
-                            </div>
-                            <div class="form-group">
-                                <label for="vorbesch_bis">Zeitraum bis (Period to)</label>
-                                <input type="date" id="vorbesch_bis" name="vorbesch_bis">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="vorbesch_art">Art der Beschäftigung (Type of Employment)</label>
-                                <input type="text" id="vorbesch_art" name="vorbesch_art">
-                            </div>
-                            <div class="form-group">
-                                <label for="vorbesch_tage">Anzahl der Beschäftigungstage (Number of Days)</label>
-                                <input type="number" id="vorbesch_tage" name="vorbesch_tage">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Signature Section -->
-                    <div class="form-section">
-                        <h2>✍️ Unterschrift (Signature)</h2>
-                        
-                        <div class="employer-note" style="margin-bottom: 20px;">
-                            <strong>Erklärung:</strong> Ich versichere, dass die vorstehenden Angaben der Wahrheit entsprechen. Ich verpflichte mich, meinem Arbeitgeber alle Änderungen unverzüglich mitzuteilen.
-                        </div>
-
-                        <div class="signature-tabs">
-                            <button type="button" class="tab-btn active" data-tab="upload">
-                                📤 Upload Signature
-                            </button>
-                            <button type="button" class="tab-btn" data-tab="draw">
-                                ✍️ Draw Signature
-                            </button>
-                        </div>
-
-                        <div class="tab-content active" id="upload-tab">
-                            <div class="upload-area" id="uploadArea">
-                                <div class="upload-icon">📝</div>
-                                <h4>Drop signature image here or click to browse</h4>
-                                <p style="font-size: 13px; color: #666; margin-top: 10px;">
-                                    Accepts: PNG, JPG, JPEG (Max 5MB)
-                                </p>
-                                <input type="file" id="signatureUpload" accept="image/png,image/jpeg,image/jpg">
-                            </div>
-                            <div class="signature-preview" id="uploadPreview">
-                                <img id="uploadedImage" src="" alt="Signature Preview">
-                                <p style="margin-top: 10px;">
-                                    <button type="button" class="btn btn-clear" onclick="clearUpload()">Remove</button>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="tab-content" id="draw-tab">
-                            <div class="canvas-container">
-                                <canvas id="signatureCanvas" width="700" height="200"></canvas>
-                                <div class="canvas-controls">
-                                    <button type="button" class="btn btn-clear" onclick="clearCanvas()">Clear</button>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="error" id="signatureError"></span>
-
-                        <div class="form-row" style="margin-top: 20px;">
-                            <div class="form-group">
-                                <label for="unterschrift_datum">Datum (Date) <span class="required">*</span></label>
-                                <input type="date" id="unterschrift_datum" name="unterschrift_datum" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="vertreter_datum">Bei Minderjährigen - Datum Vertreter</label>
-                                <input type="date" id="vertreter_datum" name="vertreter_datum">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2>📎 Zusätzliche Dokumente (Additional Documents)</h2>
-                        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">
-                            Laden Sie hier zusätzliche Dokumente hoch (z.B. Ausweiskopie, Krankenkassenkarte, etc.)
+                <!-- Upload Tab -->
+                <div class="tab-content" id="uploadTab">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📷</div>
+                        <p style="margin: 0 0 10px 0; font-weight: 600;">Unterschrift hochladen</p>
+                        <p style="margin: 0; color: #6c757d; font-size: 14px;">
+                            Klicken Sie hier oder ziehen Sie ein Bild hierher
                         </p>
-                        <div class="form-group">
-                            <input type="file" id="additionalFiles" name="additionalFiles[]" multiple accept=".pdf,.jpg,.jpeg,.png">
-                            <div id="fileList" style="margin-top: 10px; font-size: 13px;"></div>
-                        </div>
+                        <p style="margin: 10px 0 0 0; color: #6c757d; font-size: 12px;">
+                            Unterstützte Formate: PNG, JPG, JPEG
+                        </p>
                     </div>
-
-                    <div class="submit-section">
-                        <button type="submit" class="btn btn-primary">Generate PDF Document</button>
+                    <input type="file" id="signatureUpload" accept="image/*">
+                    <div class="signature-preview" id="signaturePreview">
+                        <img id="signatureImg" src="" alt="Unterschrift">
                     </div>
-                </form>
-
-                <div class="loading" id="loading">
-                    <div class="spinner"></div>
-                    <p style="margin-top: 15px; color: #666;">Generating your PDF...</p>
                 </div>
+
+                <div class="error-message" id="signatureError"></div>
             </div>
+
+            <button type="submit" class="btn btn-primary" id="submitBtn">
+                📨 Formular absenden
+            </button>
+        </form>
+
+        <div id="loading">
+            <div class="spinner"></div>
+            <p style="color: #667eea; font-weight: 600;">Wird verarbeitet...</p>
         </div>
     </div>
-</section>
+</div>
 
 <!-- Success Modal -->
 <div id="successModal" class="modal">
     <div class="modal-content">
-        <h2 style="color: #28a745; margin-bottom: 15px;">✓ PDF Generated Successfully!</h2>
-        <p style="color: #666; margin-bottom: 20px;">Your Personalfragebogen has been created. What would you like to do?</p>
-        <div class="modal-buttons">
-            <button class="btn btn-download" onclick="downloadPDF()">
-                💾 Download PDF
-            </button>
-            <button class="btn btn-email" onclick="sendEmail()">
-                📧 Send via Email
-            </button>
-        </div>
-        <p style="margin-top: 20px;">
-            <button class="btn btn-clear" onclick="closeModal()">Close</button>
-        </p>
+        <div class="success-icon">✅</div>
+        <h2>Erfolgreich gesendet!</h2>
+        <p>Ihr Personalfragebogen wurde erfolgreich übermittelt.<br>Sie erhalten eine Bestätigung per E-Mail.</p>
+        <button class="btn btn-success" onclick="closeModal()">Schließen</button>
     </div>
 </div>
 
-<!-- Load jsPDF library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 <script>
     let canvas, ctx, isDrawing = false;
     let uploadedFile = null;
-    let generatedPDF = null;
     let formData = {};
+    let generatedPDF = null;
+    let uploadedFiles = [];
 
-    // Initialize on page load
-    document.addEventListener("DOMContentLoaded", function() {
-        // Initialize canvas
+    // Initialize canvas
+    window.onload = function() {
         canvas = document.getElementById("signatureCanvas");
         ctx = canvas.getContext("2d");
         ctx.strokeStyle = "#000";
         ctx.lineWidth = 2;
         ctx.lineCap = "round";
 
-        // Set today's date as default
-        document.getElementById("unterschrift_datum").valueAsDate = new Date();
-
-        // Tab switching
-        document.querySelectorAll(".tab-btn").forEach(btn => {
-            btn.addEventListener("click", function() {
-                document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-                document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-                
-                this.classList.add("active");
-                document.getElementById(this.dataset.tab + "-tab").classList.add("active");
-            });
-        });
-
-        // Canvas drawing events
+        // Mouse events
         canvas.addEventListener("mousedown", startDrawing);
         canvas.addEventListener("mousemove", draw);
         canvas.addEventListener("mouseup", stopDrawing);
         canvas.addEventListener("mouseout", stopDrawing);
-        
-        // Touch events for mobile
-        canvas.addEventListener("touchstart", handleTouchStart);
-        canvas.addEventListener("touchmove", handleTouchMove);
+
+        // Touch events
+        canvas.addEventListener("touchstart", handleTouch);
+        canvas.addEventListener("touchmove", handleTouch);
         canvas.addEventListener("touchend", stopDrawing);
-
-        // File upload
-        const uploadArea = document.getElementById("uploadArea");
-        const fileInput = document.getElementById("signatureUpload");
-
-        uploadArea.addEventListener("click", () => fileInput.click());
-        
-        uploadArea.addEventListener("dragover", (e) => {
-            e.preventDefault();
-            uploadArea.classList.add("dragover");
-        });
-
-        uploadArea.addEventListener("dragleave", () => {
-            uploadArea.classList.remove("dragover");
-        });
-
-        uploadArea.addEventListener("drop", (e) => {
-            e.preventDefault();
-            uploadArea.classList.remove("dragover");
-            handleFiles(e.dataTransfer.files);
-        });
-
-        fileInput.addEventListener("change", (e) => {
-            handleFiles(e.target.files);
-        });
-    });
+    };
 
     function startDrawing(e) {
         isDrawing = true;
@@ -1262,71 +1050,175 @@ include 'header.php';
         isDrawing = false;
     }
 
-    function handleTouchStart(e) {
+    function handleTouch(e) {
         e.preventDefault();
         const touch = e.touches[0];
-        const rect = canvas.getBoundingClientRect();
-        isDrawing = true;
-        ctx.beginPath();
-        ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
-    }
-
-    function handleTouchMove(e) {
-        e.preventDefault();
-        if (!isDrawing) return;
-        const touch = e.touches[0];
-        const rect = canvas.getBoundingClientRect();
-        ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
-        ctx.stroke();
+        const mouseEvent = new MouseEvent(e.type === "touchstart" ? "mousedown" : "mousemove", {
+            clientX: touch.clientX,
+            clientY: touch.clientY
+        });
+        canvas.dispatchEvent(mouseEvent);
     }
 
     function clearCanvas() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    function handleFiles(files) {
-        if (files.length === 0) return;
-        
-        const file = files[0];
-        
-        if (!file.type.match("image.*")) {
-            alert("Please upload an image file");
-            return;
-        }
+    // Tab switching
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+            const tab = this.dataset.tab;
+            
+            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+            document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+            
+            this.classList.add("active");
+            document.getElementById(tab + "Tab").classList.add("active");
+        });
+    });
 
-        if (file.size > 5 * 1024 * 1024) {
-            alert("File size must be less than 5MB");
-            return;
-        }
+    // File Upload Section
+    const fileUploadArea = document.getElementById("fileUploadArea");
+    const additionalFilesInput = document.getElementById("additionalFiles");
+    const fileList = document.getElementById("fileList");
 
+    fileUploadArea.addEventListener("click", () => {
+        additionalFilesInput.click();
+    });
+
+    fileUploadArea.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        fileUploadArea.classList.add("dragover");
+    });
+
+    fileUploadArea.addEventListener("dragleave", () => {
+        fileUploadArea.classList.remove("dragover");
+    });
+
+    fileUploadArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        fileUploadArea.classList.remove("dragover");
+        const files = e.dataTransfer.files;
+        handleFileSelection(files);
+    });
+
+    additionalFilesInput.addEventListener("change", (e) => {
+        handleFileSelection(e.target.files);
+    });
+
+    function handleFileSelection(files) {
+        for (let file of files) {
+            uploadedFiles.push(file);
+        }
+        displayFileList();
+    }
+
+    function displayFileList() {
+        fileList.innerHTML = '';
+        
+        uploadedFiles.forEach((file, index) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            
+            const fileSize = formatFileSize(file.size);
+            
+            fileItem.innerHTML = `
+                <div class="file-info">
+                    <div class="file-icon">📄</div>
+                    <div class="file-details">
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-size">${fileSize}</div>
+                    </div>
+                </div>
+                <button type="button" class="file-remove" onclick="removeFile(${index})">
+                    ❌ Entfernen
+                </button>
+            `;
+            
+            fileList.appendChild(fileItem);
+        });
+    }
+
+    function removeFile(index) {
+        uploadedFiles.splice(index, 1);
+        displayFileList();
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    }
+
+    // Signature Upload
+    const uploadArea = document.getElementById("uploadArea");
+    const signatureUpload = document.getElementById("signatureUpload");
+    const signaturePreview = document.getElementById("signaturePreview");
+    const signatureImg = document.getElementById("signatureImg");
+
+    uploadArea.addEventListener("click", () => {
+        signatureUpload.click();
+    });
+
+    uploadArea.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        uploadArea.classList.add("dragover");
+    });
+
+    uploadArea.addEventListener("dragleave", () => {
+        uploadArea.classList.remove("dragover");
+    });
+
+    uploadArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove("dragover");
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith("image/")) {
+            processSignatureImage(file);
+        }
+    });
+
+    signatureUpload.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            processSignatureImage(file);
+        }
+    });
+
+    function processSignatureImage(file) {
         const reader = new FileReader();
         reader.onload = function(e) {
             uploadedFile = e.target.result;
-            document.getElementById("uploadedImage").src = uploadedFile;
-            document.getElementById("uploadPreview").style.display = "block";
+            signatureImg.src = uploadedFile;
+            signaturePreview.style.display = "block";
         };
         reader.readAsDataURL(file);
     }
 
-    function clearUpload() {
-        uploadedFile = null;
-        document.getElementById("uploadPreview").style.display = "none";
-        document.getElementById("signatureUpload").value = "";
-    }
-
+    // Validation
     function validateForm() {
-        let isValid = true;
-        
-        // Validate signature
-        const activeTab = document.querySelector(".tab-btn.active").dataset.tab;
         const signatureError = document.getElementById("signatureError");
+        let isValid = true;
+
+        // Check signature
+        const activeTab = document.querySelector(".tab-btn.active").dataset.tab;
         
         if (activeTab === "draw") {
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const isEmpty = !imageData.data.some(channel => channel !== 0);
+            const canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixels = canvasData.data;
+            let hasDrawing = false;
             
-            if (isEmpty) {
-                signatureError.textContent = "Please provide a signature";
+            for (let i = 0; i < pixels.length; i += 4) {
+                if (pixels[i + 3] > 0) {
+                    hasDrawing = true;
+                    break;
+                }
+            }
+            
+            if (!hasDrawing) {
+                signatureError.textContent = "Bitte zeichnen Sie Ihre Unterschrift";
                 signatureError.style.display = "block";
                 isValid = false;
             } else {
@@ -1334,7 +1226,7 @@ include 'header.php';
             }
         } else {
             if (!uploadedFile) {
-                signatureError.textContent = "Please upload a signature image";
+                signatureError.textContent = "Bitte laden Sie ein Unterschriftsbild hoch";
                 signatureError.style.display = "block";
                 isValid = false;
             } else {
@@ -1388,18 +1280,13 @@ include 'header.php';
             signatureImage = uploadedFile;
         }
 
-        // Generate PDF
+        // Generate PDF and send email
         try {
             await generatePDF(formData, signatureImage);
-            
-            // Hide loading
-            document.getElementById("loading").style.display = "none";
-            
-            // Show success modal
-            document.getElementById("successModal").style.display = "block";
+            await sendEmail();
         } catch (error) {
-            console.error("Error generating PDF:", error);
-            alert("Error generating PDF. Please try again.");
+            console.error("Error:", error);
+            alert("Fehler beim Senden. Bitte versuchen Sie es erneut.");
             document.getElementById("loading").style.display = "none";
             this.style.display = "block";
         }
@@ -1478,6 +1365,8 @@ include 'header.php';
         addField("Geburtsdatum", data.geburtsdatum);
         addField("Straße", data.strasse);
         addField("PLZ/Ort", data.plz + " " + data.ort);
+        addField("E-Mail", data.customer_email);
+        addField("Telefon", data.telefon);
         addField("Geschlecht", data.geschlecht);
         addField("Staatsangehörigkeit", data.staatsangehoerigkeit);
         addField("Versicherungsnummer", data.versicherungsnummer);
@@ -1496,7 +1385,7 @@ include 'header.php';
         addField("Ausgeübte Tätigkeit", data.ausgeuebte_taetigkeit);
         addField("Art", data.beschaeftigungsart);
         addField("Probezeit", data.probezeit);
-        addField("Wöchentliche Arbeitszeit", data.wochenarbeitszeit + " Std.");
+        addField("Wöchentliche Arbeitszeit", data.wochenarbeitszeit ? data.wochenarbeitszeit + " Std." : "");
         addField("Arbeitszeit-Typ", data.arbeitszeit_typ);
         
         if (data.mo || data.di || data.mi || data.do || data.fr || data.sa || data.so) {
@@ -1561,7 +1450,7 @@ include 'header.php';
         yPos += 30;
         doc.setFont(undefined, "normal");
         doc.setFontSize(9);
-        doc.text("Datum: " + (data.unterschrift_datum || new Date().toLocaleDateString("de-DE")), leftMargin, yPos);
+        doc.text("Datum: " + new Date().toLocaleDateString("de-DE"), leftMargin, yPos);
 
         // Footer
         doc.setFontSize(8);
@@ -1571,50 +1460,42 @@ include 'header.php';
         generatedPDF = doc;
     }
 
-    function downloadPDF() {
-        if (generatedPDF) {
-            generatedPDF.save("Personalfragebogen-" + Date.now() + ".pdf");
+    async function sendEmail() {
+        if (!generatedPDF) {
+            throw new Error("No PDF available");
         }
-    }
 
-    function sendEmail() {
-    if (!generatedPDF) {
-        alert("No PDF available");
-        return;
-    }
+        const pdfBase64 = generatedPDF.output("datauristring").split(",")[1];
+        const formDataToSend = new FormData();
+        
+        // Add basic info
+        formDataToSend.append("name", formData.familienname + ", " + formData.vorname);
+        formDataToSend.append("customer_email", formData.customer_email);
+        formDataToSend.append("pdf", pdfBase64);
 
-    const pdfBase64 = generatedPDF.output("datauristring").split(",")[1];
-    const formDataToSend = new FormData();
-    
-    // Add basic info
-    formDataToSend.append("name", formData.familienname + ", " + formData.vorname);
-    formDataToSend.append("email", formData.email || "");
-    formDataToSend.append("pdf", pdfBase64);
+        // Add additional uploaded files
+        uploadedFiles.forEach((file, index) => {
+            formDataToSend.append('attachments[]', file);
+        });
 
-    // NEW: Add additional uploaded files
-    const fileInput = document.getElementById('additionalFiles');
-    for (let i = 0; i < fileInput.files.length; i++) {
-        formDataToSend.append('attachments[]', fileInput.files[i]);
-    }
-
-    fetch("assets/php/signature-email.php", {
-        method: "POST",
-        body: formDataToSend
-    })
-    .then(response => response.json()) // Updated to expect JSON
-    .then(data => {
-        if(data.success) {
-            alert("Erfolgreich gesendet!");
-            location.reload();
+        const response = await fetch("assets/php/signature-email.php", {
+            method: "POST",
+            body: formDataToSend
+        });
+        
+        const data = await response.json();
+        
+        // Hide loading
+        document.getElementById("loading").style.display = "none";
+        
+        if (data.success) {
+            // Show success modal
+            document.getElementById("successModal").style.display = "flex";
         } else {
-            alert("Fehler: " + data.message);
+            throw new Error(data.message || "Fehler beim Senden");
         }
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        alert("Error sending email.");
-    });
-}
+    }
+
     function closeModal() {
         document.getElementById("successModal").style.display = "none";
         location.reload();

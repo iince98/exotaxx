@@ -1,7 +1,8 @@
 <?php
 /**
- * Email Handler with Enhanced Debugging
- * Use this version to identify email issues
+ * Email Handler for Employee Questionnaire
+ * Sends form PDF and attachments to company email
+ * Sends confirmation to customer email
  */
 
 // ENABLE FULL ERROR REPORTING
@@ -46,20 +47,24 @@ try {
 
     // Get form data
     $name = isset($_POST['name']) ? trim($_POST['name']) : '';
-    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
-    $phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
+    $customerEmail = isset($_POST['customer_email']) ? trim($_POST['customer_email']) : '';
     $pdfBase64 = isset($_POST['pdf']) ? $_POST['pdf'] : '';
     
-    // NEW: Get CC email addresses
-    // $ccEmails = isset($_POST['cc_emails']) ? trim($_POST['cc_emails']) : '';
-    // // You can also hardcode CC addresses if needed:
-    $ccEmails = 'duyguince@yahoo.com';
+    // Company email (where all submissions go)
+    $companyEmail = 'info@exotaxx.com';
+    
+    // CC email addresses (for notifications)
+    $ccEmails = 'iince98@gmail.com';
 
-    debugLog("Form data received - Name: $name, Email: $email");
+    debugLog("Form data received - Name: $name, Customer Email: $customerEmail");
 
     // Validate inputs
     if (empty($name)) {
         throw new Exception('Name is required');
+    }
+
+    if (empty($customerEmail) || !filter_var($customerEmail, FILTER_VALIDATE_EMAIL)) {
+        throw new Exception('Valid customer email is required');
     }
 
     if (empty($pdfBase64)) {
@@ -76,11 +81,14 @@ try {
     debugLog("PDF decoded successfully - Size: " . $pdfSize . " bytes");
 
     // Configuration
-    $to = 'iince98@gmail.com';
     $from_email = 'noreply@' . ($_SERVER['HTTP_HOST'] ?? 'exotaxx.com');
     $from_name = 'ExoTaxx GmbH - Personalfragebogen';
     
-    debugLog("Email will be sent to: $to from: $from_email");
+    debugLog("Email will be sent to: $companyEmail from: $from_email");
+    
+    // =====================================
+    // SEND EMAIL TO COMPANY
+    // =====================================
     
     // Create a unique boundary
     $boundary = md5(time() . rand());
@@ -90,11 +98,10 @@ try {
     
     // Email headers
     $headers = "From: " . $from_name . " <" . $from_email . ">\r\n";
-    $headers .= "Reply-To: " . ($email ? $email : $from_email) . "\r\n";
+    $headers .= "Reply-To: " . $customerEmail . "\r\n";
     
-    // ADD CC HEADERS
+    // Add CC headers
     if (!empty($ccEmails)) {
-        // Split multiple CC emails if separated by commas or semicolons
         $ccArray = preg_split('/[;,]+/', $ccEmails);
         $validCCEmails = [];
         
@@ -121,10 +128,8 @@ try {
     $message = "--" . $boundary . "\r\n";
     $message .= "Content-Type: text/html; charset=UTF-8\r\n";
     $message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
-
-
     
-    // Simple HTML body for testing
+    // HTML body
     $htmlBody = "
     <!DOCTYPE html>
     <html>
@@ -132,72 +137,62 @@ try {
         <meta charset='UTF-8'>
         <style>
             body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; padding: 20px; }
-            .header { background: #667eea; color: white; padding: 20px; text-align: center; margin-bottom: 20px; }
-            .content { background: #f8f9fa; padding: 20px; }
-            .info { margin: 10px 0; padding: 10px; background: white; }
-            .cc-notice { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin-top: 20px; }
+            .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center; margin-bottom: 20px; border-radius: 10px; }
+            .content { background: #f8f9fa; padding: 20px; border-radius: 10px; }
+            .info { margin: 10px 0; padding: 10px; background: white; border-radius: 5px; }
+            .info strong { color: #667eea; }
+            .attachment-note { background: #e7f3ff; border-left: 4px solid #667eea; padding: 15px; margin-top: 20px; border-radius: 5px; }
         </style>
     </head>
     <body>
         <div class='header'>
-            <h1>Neuer Personalfragebogen</h1>
+            <h1>📋 Neuer Personalfragebogen eingegangen</h1>
         </div>
         <div class='content'>
             <h2>Mitarbeiterinformationen</h2>
-            <div class='info'><strong>Name:</strong> " . htmlspecialchars($name) . "</div>";
-    
-    if (!empty($email)) {
-        $htmlBody .= "<div class='info'><strong>E-Mail:</strong> " . htmlspecialchars($email) . "</div>";
-    }
-    
-    if (!empty($phone)) {
-        $htmlBody .= "<div class='info'><strong>Telefon:</strong> " . htmlspecialchars($phone) . "</div>";
-    }
-    
-    // Add CC notice to email body if applicable
-    if (!empty($ccEmails)) {
-        $htmlBody .= "<div class='info'><strong>CC an:</strong> " . htmlspecialchars($ccEmails) . "</div>";
-    }
-    
-    $htmlBody .= "
+            <div class='info'><strong>Name:</strong> " . htmlspecialchars($name) . "</div>
+            <div class='info'><strong>E-Mail:</strong> " . htmlspecialchars($customerEmail) . "</div>
             <div class='info'><strong>Eingereicht am:</strong> " . date('d.m.Y H:i:s') . "</div>
-            <div style='margin-top: 20px; padding: 15px; background: #e7f3ff;'>
-                <strong>Anhang:</strong> Der ausgefüllte Personalfragebogen ist als PDF angehängt.
-            </div>";
+            
+            <div class='attachment-note'>
+                <strong>📎 Anhänge:</strong><br>
+                Der ausgefüllte Personalfragebogen ist als PDF angehängt.";
     
-    // Add CC notice
-    if (!empty($ccEmails)) {
-        $htmlBody .= "
-            <div class='cc-notice'>
-                <strong>ℹ️ Diese E-Mail wurde auch an folgende Empfänger gesendet:</strong><br>
-                " . htmlspecialchars($ccEmails) . "
-            </div>";
+    // Check if there are additional attachments
+    if (isset($_FILES['attachments']) && is_array($_FILES['attachments']['name'])) {
+        $attachmentCount = count($_FILES['attachments']['name']);
+        if ($attachmentCount > 0) {
+            $htmlBody .= "<br>Zusätzlich wurden " . $attachmentCount . " weitere Dokument(e) angehängt.";
+        }
     }
     
     $htmlBody .= "
+            </div>
         </div>
     </body>
     </html>";
     
     $message .= $htmlBody . "\r\n\r\n";
     
-    // PDF attachment
-    // ... (Previous logic for generating $htmlBody and the main PDF attachment)
-
-    // 1. Attach the generated Questionnaire PDF (from Base64)
+    // Attach the generated Questionnaire PDF
     $message .= "--" . $boundary . "\r\n";
-    $message .= "Content-Type: application/pdf; name=\"Personalfragebogen_" . date('Y-m-d') . ".pdf\"\r\n";
+    $message .= "Content-Type: application/pdf; name=\"Personalfragebogen_" . $name . "_" . date('Y-m-d') . ".pdf\"\r\n";
     $message .= "Content-Transfer-Encoding: base64\r\n";
-    $message .= "Content-Disposition: attachment; filename=\"Personalfragebogen_" . date('Y-m-d') . ".pdf\"\r\n\r\n";
+    $message .= "Content-Disposition: attachment; filename=\"Personalfragebogen_" . $name . "_" . date('Y-m-d') . ".pdf\"\r\n\r\n";
     $message .= chunk_split(base64_encode($pdfData)) . "\r\n";
 
-    // 2. NEW: Attach additional uploaded files from the user
-    if (isset($_FILES['attachments'])) {
+    // Attach additional uploaded files
+    if (isset($_FILES['attachments']) && is_array($_FILES['attachments']['name'])) {
         foreach ($_FILES['attachments']['tmp_name'] as $key => $tmpName) {
             if ($_FILES['attachments']['error'][$key] === UPLOAD_ERR_OK) {
                 $fileName = $_FILES['attachments']['name'][$key];
                 $fileType = $_FILES['attachments']['type'][$key];
                 $fileContent = file_get_contents($tmpName);
+                
+                // Determine mime type if not provided
+                if (empty($fileType)) {
+                    $fileType = 'application/octet-stream';
+                }
                 
                 $message .= "--" . $boundary . "\r\n";
                 $message .= "Content-Type: $fileType; name=\"$fileName\"\r\n";
@@ -205,7 +200,7 @@ try {
                 $message .= "Content-Disposition: attachment; filename=\"$fileName\"\r\n\r\n";
                 $message .= chunk_split(base64_encode($fileContent)) . "\r\n";
                 
-                debugLog("Attached extra file: $fileName");
+                debugLog("Attached extra file: $fileName (Size: " . strlen($fileContent) . " bytes)");
             }
         }
     }
@@ -215,52 +210,43 @@ try {
     
     debugLog("Message body prepared - Total size: " . strlen($message) . " bytes");
     
-    // Attempt to send email
-    debugLog("Attempting to send email...");
+    // Attempt to send email to company
+    debugLog("Attempting to send email to company...");
     
-    // Suppress warnings and capture them
-    $oldErrorHandler = set_error_handler(function($errno, $errstr, $errfile, $errline) {
-        debugLog("PHP Warning: $errstr in $errfile on line $errline");
-        return true;
-    });
-    
-    $mailResult = mail($to, $subject, $message, $headers);
-    
-    restore_error_handler();
+    $mailResult = @mail($companyEmail, $subject, $message, $headers);
     
     if ($mailResult) {
-        debugLog("mail() returned TRUE - Email should be sent");
+        debugLog("Company email sent successfully");
         
-        $response['success'] = true;
-        $response['message'] = 'E-Mail erfolgreich gesendet! ✓';
+        // =====================================
+        // SEND CONFIRMATION EMAIL TO CUSTOMER
+        // =====================================
         
-        // Try to send confirmation email
-        if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            debugLog("Attempting to send confirmation email to: $email");
-            try {
-                sendConfirmationEmail($email, $name, $pdfData);
-                debugLog("Confirmation email sent");
-            } catch (Exception $e) {
-                debugLog("Confirmation email failed: " . $e->getMessage());
-                // Don't fail the main request if confirmation fails
-            }
+        try {
+            debugLog("Attempting to send confirmation email to customer: $customerEmail");
+            sendConfirmationEmail($customerEmail, $name, $pdfData);
+            debugLog("Confirmation email sent to customer");
+            
+            $response['success'] = true;
+            $response['message'] = 'Formular erfolgreich gesendet! Sie erhalten eine Bestätigung per E-Mail.';
+            
+        } catch (Exception $e) {
+            debugLog("Confirmation email failed: " . $e->getMessage());
+            // Still mark as success since company email was sent
+            $response['success'] = true;
+            $response['message'] = 'Formular erfolgreich gesendet! (Hinweis: Bestätigungs-E-Mail konnte nicht zugestellt werden)';
         }
         
     } else {
         debugLog("mail() returned FALSE - Email was NOT sent");
         
         // Check for common issues
-        $possibleIssues = [];
-        
-        // Check if sendmail is configured
         $sendmail = ini_get('sendmail_path');
         if (empty($sendmail)) {
-            $possibleIssues[] = "sendmail_path is not configured";
+            debugLog("Issue: sendmail_path is not configured");
         }
         
-        debugLog("Possible issues: " . implode(", ", $possibleIssues));
-        
-        throw new Exception('mail() function returned false. Check debug log for details.');
+        throw new Exception('E-Mail konnte nicht gesendet werden. Bitte kontaktieren Sie den Support.');
     }
     
 } catch (Exception $e) {
@@ -270,12 +256,11 @@ try {
     $response['message'] = 'Fehler: ' . $e->getMessage();
     
     // Add helpful suggestions
-    if (strpos($e->getMessage(), 'mail()') !== false) {
+    if (strpos($e->getMessage(), 'mail()') !== false || strpos($e->getMessage(), 'gesendet') !== false) {
         $response['message'] .= "\n\nMögliche Lösungen:\n";
-        $response['message'] .= "1. Überprüfen Sie die Spam-Ordner\n";
-        $response['message'] .= "2. Ihr Hosting-Provider blockiert möglicherweise E-Mails\n";
-        $response['message'] .= "3. Verwenden Sie SMTP (PHPMailer) für zuverlässigeren Versand\n";
-        $response['message'] .= "4. Kontaktieren Sie Ihren Hosting-Support\n";
+        $response['message'] .= "• Überprüfen Sie die Spam-Ordner\n";
+        $response['message'] .= "• Ihr Hosting-Provider blockiert möglicherweise E-Mails\n";
+        $response['message'] .= "• Kontaktieren Sie Ihren Hosting-Support";
     }
 }
 
@@ -283,23 +268,25 @@ try {
 $response['debug'][] = "Server: " . ($_SERVER['SERVER_SOFTWARE'] ?? 'Unknown');
 $response['debug'][] = "PHP Version: " . phpversion();
 $response['debug'][] = "Sendmail Path: " . (ini_get('sendmail_path') ?: 'Not set');
+$response['debug'][] = "Upload Max Filesize: " . ini_get('upload_max_filesize');
+$response['debug'][] = "Post Max Size: " . ini_get('post_max_size');
 
 // Return JSON response
 echo json_encode($response, JSON_PRETTY_PRINT);
 exit;
 
 /**
- * Send confirmation email to the employee
+ * Send confirmation email to the customer
  */
 function sendConfirmationEmail($to, $name, $pdfData) {
-    $boundary = md5(time() . rand());
+    $boundary = md5(time() . rand() . 'confirmation');
     
-    $subject = 'Bestätigung - ExoTaxx GmbH';
+    $subject = 'Bestätigung - ExoTaxx GmbH Personalfragebogen';
     
     $from_email = 'noreply@' . ($_SERVER['HTTP_HOST'] ?? 'exotaxx.com');
     
     $headers = "From: ExoTaxx GmbH <$from_email>\r\n";
-    $headers .= "Reply-To: hr@exotaxx.com\r\n";
+    $headers .= "Reply-To: info@exotaxx.com\r\n";
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: multipart/mixed; boundary=\"" . $boundary . "\"\r\n";
     
@@ -310,29 +297,58 @@ function sendConfirmationEmail($to, $name, $pdfData) {
     $htmlBody = "
     <!DOCTYPE html>
     <html>
-    <body style='font-family: Arial, sans-serif; padding: 20px;'>
-        <div style='background: #667eea; color: white; padding: 20px; text-align: center;'>
-            <h1>✓ Bestätigung</h1>
+    <head>
+        <meta charset='UTF-8'>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; padding: 20px; }
+            .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px; }
+            .header h1 { margin: 0; font-size: 28px; }
+            .content { background: #f8f9fa; padding: 30px; margin-top: 20px; border-radius: 10px; }
+            .success-icon { font-size: 64px; text-align: center; margin-bottom: 20px; }
+            .message { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #28a745; }
+            .footer { text-align: center; margin-top: 30px; color: #6c757d; font-size: 12px; }
+        </style>
+    </head>
+    <body>
+        <div class='header'>
+            <h1>✅ Bestätigung</h1>
         </div>
-        <div style='padding: 20px; background: #f8f9fa;'>
-            <p>Sehr geehrte(r) " . htmlspecialchars($name) . ",</p>
-            <p>Ihr Personalfragebogen wurde erfolgreich eingereicht!</p>
-            <p>Eine Kopie finden Sie im Anhang.</p>
-            <p>Mit freundlichen Grüßen,<br>Ihr ExoTaxx GmbH Team</p>
+        <div class='content'>
+            <div class='success-icon'>✅</div>
+            <div class='message'>
+                <p><strong>Sehr geehrte(r) " . htmlspecialchars($name) . ",</strong></p>
+                <p>vielen Dank für das Ausfüllen des Personalfragebogens!</p>
+                <p>Ihr Fragebogen wurde erfolgreich bei uns eingereicht und wird schnellstmöglich bearbeitet.</p>
+                <p>Eine Kopie Ihres ausgefüllten Fragebogens finden Sie im Anhang dieser E-Mail.</p>
+                <p style='margin-top: 30px;'>
+                    <strong>Mit freundlichen Grüßen,</strong><br>
+                    Ihr ExoTaxx GmbH Team
+                </p>
+            </div>
+            <div class='footer'>
+                <p>Diese E-Mail wurde automatisch generiert. Bitte antworten Sie nicht auf diese Nachricht.</p>
+                <p>Bei Fragen wenden Sie sich bitte an: hr@exotaxx.com</p>
+            </div>
         </div>
     </body>
     </html>";
     
     $message .= $htmlBody . "\r\n\r\n";
     
-    // Attach PDF
+    // Attach PDF copy
     $message .= "--" . $boundary . "\r\n";
-    $message .= "Content-Type: application/pdf; name=\"Ihre_Personalfragebogen.pdf\"\r\n";
+    $message .= "Content-Type: application/pdf; name=\"Ihr_Personalfragebogen.pdf\"\r\n";
     $message .= "Content-Transfer-Encoding: base64\r\n";
-    $message .= "Content-Disposition: attachment; filename=\"Ihre_Personalfragebogen.pdf\"\r\n\r\n";
+    $message .= "Content-Disposition: attachment; filename=\"Ihr_Personalfragebogen_ExoTaxx.pdf\"\r\n\r\n";
     $message .= chunk_split(base64_encode($pdfData)) . "\r\n";
     $message .= "--" . $boundary . "--";
     
-    return mail($to, $subject, $message, $headers);
+    $result = @mail($to, $subject, $message, $headers);
+    
+    if (!$result) {
+        throw new Exception("Failed to send confirmation email");
+    }
+    
+    return $result;
 }
 ?>
