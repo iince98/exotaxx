@@ -558,12 +558,12 @@ include 'header.php';
                 <h2>📝 Persönliche Angaben</h2>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Firma</label>
+                        <label>Firma <span class="required">*</span> </label> 
                         <input type="text" name="firma" placeholder="Firma eingeben">
                     </div>
                     <div class="form-group">
-                        <label>Personalnummer</label>
-                        <input type="text" name="personalnummer" placeholder="Personalnummer">
+                        <label>Firma Adresse <span class="required">*</span> </label> 
+                        <input type="text" name="firma_adresse" placeholder="Firma Adresse eingeben">
                     </div>
                 </div>
 
@@ -1358,6 +1358,7 @@ include 'header.php';
         // Personal Information
         addSection("Persönliche Angaben");
         addField("Firma", data.firma);
+        addField("Firma Adresse", data.firma_adresse);
         addField("Personalnummer", data.personalnummer);
         addField("Nachname", data.familienname);
         addField("Geburtsname", data.geburtsname);
@@ -1471,6 +1472,7 @@ include 'header.php';
         // Add basic info
         formDataToSend.append("name", formData.familienname + ", " + formData.vorname);
         formDataToSend.append("customer_email", formData.customer_email);
+        formDataToSend.append("firma_adresse", formData.firma_adresse || "");
         formDataToSend.append("pdf", pdfBase64);
 
         // Add additional uploaded files

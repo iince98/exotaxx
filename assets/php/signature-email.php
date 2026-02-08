@@ -48,6 +48,7 @@ try {
     // Get form data
     $name = isset($_POST['name']) ? trim($_POST['name']) : '';
     $customerEmail = isset($_POST['customer_email']) ? trim($_POST['customer_email']) : '';
+    $firmaAdresse = isset($_POST['firma_adresse']) ? trim($_POST['firma_adresse']) : '';
     $pdfBase64 = isset($_POST['pdf']) ? $_POST['pdf'] : '';
     
     // Company email (where all submissions go)
@@ -152,6 +153,7 @@ try {
             <h2>Mitarbeiterinformationen</h2>
             <div class='info'><strong>Name:</strong> " . htmlspecialchars($name) . "</div>
             <div class='info'><strong>E-Mail:</strong> " . htmlspecialchars($customerEmail) . "</div>
+            <div class='info'><strong>Firma Adresse:</strong> " . htmlspecialchars($firmaAdresse) . "</div>
             <div class='info'><strong>Eingereicht am:</strong> " . date('d.m.Y H:i:s') . "</div>
             
             <div class='attachment-note'>
