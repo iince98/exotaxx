@@ -562,7 +562,7 @@ include 'header.php';
                         <input type="text" name="firma" placeholder="Firma eingeben">
                     </div>
                     <div class="form-group">
-                        <label>Personalnummer</label>
+                        <label>Personalnummer</label> <span class="required">*</span>
                         <input type="text" name="personalnummer" placeholder="Personalnummer">
                     </div>
                 </div>
