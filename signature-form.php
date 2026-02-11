@@ -566,8 +566,8 @@ include 'header.php';
                         <input type="text" name="firma" placeholder="Firma eingeben" required>
                     </div>
                     <div class="form-group">
-                        <label>Firma Adresse <span class="required">*</span> </label> 
-                        <input type="text" name="firma_adresse" placeholder="Firma Adresse eingeben" required>
+                        <label>Personalnummer</label>
+                        <input type="text" name="personalnummer" placeholder="Personalnummer">
                     </div>
                 </div>
 
