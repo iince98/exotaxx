@@ -8,8 +8,12 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- favicon -->
-    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <!-- favicon (Google & browsers) -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
 
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -106,15 +110,22 @@
                             <div class="main-menu text-right text-xl-center">
                                 <nav id="mobile-menu" style="display: block;">
                                     <ul>
-                                        <li class="has-sub">
-                                            <a href="index.php">Hauptseite</a>
-                                        </li>
-                                        <li class="has-sub">
-                                            <a href="services.php">Leistungen</a>
-                                        </li>
+                                        <li><a href="index.php">Hauptseite</a></li>
+                                    
+                                        <li><a href="services.php">Leistungen</a></li>
+                                    
                                         <li><a href="about.php">Über uns</a></li>
+                                    
+                                        <li class="has-sub">
+                                            <a href="#">Online Anfrage</a>
+                                            <ul>
+                                                <li>
+                                                    <a href="signature-form.php">Personalfragebogen</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    
                                         <li><a href="contact.php">Kontakt</a></li>
-                                        <!-- <li><a href="signature-form.php">Bogen</a></li> -->
                                     </ul>
                                 </nav>
                             </div>

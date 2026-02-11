@@ -57,6 +57,10 @@ $custom_css = '
         margin-bottom: 20px;
     }
 
+    .form-row.address-row {
+        grid-template-columns: 2fr 1fr 2fr;
+    }
+
     .form-group {
         margin-bottom: 0;
     }
@@ -547,7 +551,7 @@ include 'header.php';
 
 <div class="signature-container">
     <div class="signature-header">
-        <h1>📋 Personalfragebogen für Mitarbeiter</h1>
+        <h1>Personalfragebogen für Mitarbeiter</h1>
         <p>Bitte füllen Sie alle erforderlichen Felder aus</p>
     </div>
 
@@ -555,15 +559,15 @@ include 'header.php';
         <form id="personalForm" method="POST">
             <!-- Personal Information Section -->
             <div class="form-section">
-                <h2>📝 Persönliche Angaben</h2>
+                <h2>Persönliche Angaben</h2>
                 <div class="form-row">
                     <div class="form-group">
                         <label>Firma <span class="required">*</span> </label> 
-                        <input type="text" name="firma" placeholder="Firma eingeben">
+                        <input type="text" name="firma" placeholder="Firma eingeben" required>
                     </div>
                     <div class="form-group">
                         <label>Firma Adresse <span class="required">*</span> </label> 
-                        <input type="text" name="firma_adresse" placeholder="Firma Adresse eingeben">
+                        <input type="text" name="firma_adresse" placeholder="Firma Adresse eingeben" required>
                     </div>
                 </div>
 
@@ -573,7 +577,7 @@ include 'header.php';
                         <input type="text" name="familienname" placeholder="Nachname" required>
                     </div>
                     <div class="form-group">
-                        <label>Geburtsname</label>
+                        <label>Geburtsname </label>
                         <input type="text" name="geburtsname" placeholder="Geburtsname">
                     </div>
                 </div>
@@ -589,17 +593,14 @@ include 'header.php';
                     </div>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group full-width">
+                <div class="form-row address-row">
+                    <div class="form-group">
                         <label>Straße und Hausnummer <span class="required">*</span></label>
                         <input type="text" name="strasse" placeholder="Straße und Hausnummer" required>
                     </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
+                    <div class="form-group plz-group">
                         <label>PLZ <span class="required">*</span></label>
-                        <input type="text" name="plz" placeholder="PLZ" required>
+                        <input type="text" name="plz" placeholder="PLZ" maxlength="7" required>
                     </div>
                     <div class="form-group">
                         <label>Ort <span class="required">*</span></label>
@@ -609,30 +610,30 @@ include 'header.php';
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>E-Mail (für Benachrichtigungen) <span class="required">*</span></label>
+                        <label>E-Mail (für Firma) <span class="required">*</span></label>
                         <input type="email" name="customer_email" id="customer_email" placeholder="ihre.email@beispiel.de" required>
                         <small style="color: #6c757d; font-size: 12px;">An diese Adresse wird eine Bestätigung gesendet</small>
                     </div>
                     <div class="form-group">
-                        <label>Telefon</label>
-                        <input type="tel" name="telefon" placeholder="+49 123 456789">
+                        <label>Telefon <span class="required">*</span></label>
+                        <input type="tel" name="telefon" placeholder="+49 123 456789" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Geschlecht</label>
+                        <label>Geschlecht <span class="required">*</span></label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="geschlecht_m" name="geschlecht" value="Männlich">
+                                <input type="radio" id="geschlecht_m" name="geschlecht" value="Männlich" required>
                                 <label for="geschlecht_m">Männlich</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="geschlecht_w" name="geschlecht" value="Weiblich">
+                                <input type="radio" id="geschlecht_w" name="geschlecht" value="Weiblich" required>
                                 <label for="geschlecht_w">Weiblich</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="geschlecht_d" name="geschlecht" value="Divers">
+                                <input type="radio" id="geschlecht_d" name="geschlecht" value="Divers" required>
                                 <label for="geschlecht_d">Divers</label>
                             </div>
                         </div>
@@ -641,29 +642,29 @@ include 'header.php';
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Staatsangehörigkeit</label>
-                        <input type="text" name="staatsangehoerigkeit" placeholder="z.B. Deutsch">
+                        <label>Staatsangehörigkeit <span class="required">*</span></label>
+                        <input type="text" name="staatsangehoerigkeit" placeholder="z.B. Deutsch" required>
                     </div>
                     <div class="form-group">
-                        <label>Versicherungsnummer</label>
-                        <input type="text" name="versicherungsnummer" placeholder="Versicherungsnummer">
+                        <label>Renten / Sozialversicherungsnummer <span class="required">*</span></label>
+                        <input type="text" name="versicherungsnummer" placeholder="z.B. 12 150785 M 001" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Geburtsort</label>
-                        <input type="text" name="geburtsort" placeholder="Geburtsort">
+                        <label>Geburtsort <span class="required">*</span></label>
+                        <input type="text" name="geburtsort" placeholder="Geburtsort" required>
                     </div>
                     <div class="form-group">
-                        <label>Schwerbehindert</label>
+                        <label>Schwerbehindert <span class="required">*</span></label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="schwerbehindert_ja" name="schwerbehindert" value="Ja">
+                                <input type="radio" id="schwerbehindert_ja" name="schwerbehindert" value="Ja" required>
                                 <label for="schwerbehindert_ja">Ja</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="schwerbehindert_nein" name="schwerbehindert" value="Nein">
+                                <input type="radio" id="schwerbehindert_nein" name="schwerbehindert" value="Nein" required>
                                 <label for="schwerbehindert_nein">Nein</label>
                             </div>
                         </div>
@@ -672,45 +673,57 @@ include 'header.php';
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>IBAN</label>
-                        <input type="text" name="iban" placeholder="DE89370400440532013000">
+                        <label>Zahlungsart <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="zahlungsart_iban" name="zahlungsart" value="IBAN" checked>
+                                <label for="zahlungsart_iban">IBAN</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="zahlungsart_bar" name="zahlungsart" value="Bar">
+                                <label for="zahlungsart_bar">Bar</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row" id="ibanFields">
+                    <div class="form-group">
+                        <label>IBAN <span class="required">*</span></label>
+                        <input type="text" name="iban" id="ibanInput" placeholder="DE89370400440532013000">
                     </div>
                     <div class="form-group">
-                        <label>BIC</label>
-                        <input type="text" name="bic" placeholder="COBADEFFXXX">
+                        <label>BIC <span class="required">*</span></label>
+                        <input type="text" name="bic" id="bicInput" placeholder="COBADEFFXXX">
                     </div>
                 </div>
             </div>
 
             <!-- Employment Section -->
             <div class="form-section">
-                <h2>💼 Beschäftigung</h2>
+                <h2>Beschäftigung</h2>
                 <div class="form-row">
                     <div class="form-group">
                         <label>Eintrittsdatum <span class="required">*</span></label>
                         <input type="date" name="eintrittsdatum" required>
                     </div>
+                </div>
+
+                <div class="form-row">
                     <div class="form-group">
-                        <label>Beschäftigungsbetrieb</label>
-                        <input type="text" name="beschaeftigungsbetrieb" placeholder="Betrieb">
+                        <label>Berufsbezeichnung <span class="required">*</span></label>
+                        <input type="text" name="berufsbezeichnung" placeholder="z.B. Buchhalter" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ausgeübte Tätigkeit <span class="required">*</span></label>
+                        <input type="text" name="ausgeuebte_taetigkeit" placeholder="Tätigkeit" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Berufsbezeichnung</label>
-                        <input type="text" name="berufsbezeichnung" placeholder="z.B. Buchhalter">
-                    </div>
-                    <div class="form-group">
-                        <label>Ausgeübte Tätigkeit</label>
-                        <input type="text" name="ausgeuebte_taetigkeit" placeholder="Tätigkeit">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Art der Beschäftigung</label>
-                        <select name="beschaeftigungsart">
+                        <label>Art der Beschäftigung <span class="required">*</span></label>
+                        <select name="beschaeftigungsart" required>
                             <option value="">Bitte wählen...</option>
                             <option value="Vollzeit">Vollzeit</option>
                             <option value="Teilzeit">Teilzeit</option>
@@ -719,24 +732,19 @@ include 'header.php';
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Probezeit (Monate)</label>
-                        <input type="number" name="probezeit" placeholder="z.B. 6">
+                        <label>Probezeit (Monate) <span class="required">*</span></label>
+                        <input type="number" name="probezeit" placeholder="z.B. 6" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Wöchentliche Arbeitszeit (Std.)</label>
-                        <input type="number" name="wochenarbeitszeit" placeholder="40" step="0.5">
+                        <label>Wöchentliche Arbeitszeit (Std.) <span class="required">*</span></label>
+                        <input type="number" name="wochenarbeitszeit" placeholder="40" step="0.5" required>
                     </div>
                     <div class="form-group">
-                        <label>Arbeitszeit-Typ</label>
-                        <select name="arbeitszeit_typ">
-                            <option value="">Bitte wählen...</option>
-                            <option value="Fest">Fest</option>
-                            <option value="Flexibel">Flexibel</option>
-                            <option value="Schichtarbeit">Schichtarbeit</option>
-                        </select>
+                        <label>Monatliche Arbeitszeit (Std.) <span class="required">*</span></label>
+                        <input type="number" name="monatliche_arbeitszeit" placeholder="173" step="0.5" required>
                     </div>
                 </div>
 
@@ -774,21 +782,15 @@ include 'header.php';
                     </div>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Urlaubsanspruch (Tage/Jahr)</label>
-                        <input type="number" name="urlaubsanspruch" placeholder="30">
-                    </div>
-                </div>
             </div>
 
             <!-- Education Section -->
             <div class="form-section">
-                <h2>🎓 Ausbildung</h2>
+                <h2>Ausbildung</h2>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Schulabschluss</label>
-                        <select name="schulabschluss">
+                        <label>Schulabschluss <span class="required">*</span></label>
+                        <select name="schulabschluss" required>
                             <option value="">Bitte wählen...</option>
                             <option value="Hauptschulabschluss">Hauptschulabschluss</option>
                             <option value="Realschulabschluss">Realschulabschluss</option>
@@ -803,36 +805,22 @@ include 'header.php';
                     </div>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Ausbildungsbeginn</label>
-                        <input type="date" name="ausbildung_beginn">
-                    </div>
-                    <div class="form-group">
-                        <label>Ausbildungsende</label>
-                        <input type="date" name="ausbildung_ende">
-                    </div>
-                </div>
             </div>
 
             <!-- Tax Section -->
             <div class="form-section">
-                <h2>💶 Steuer</h2>
+                <h2>Steuer</h2>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Steuer-Identifikationsnummer</label>
-                        <input type="text" name="steuer_id" placeholder="12345678901">
-                    </div>
-                    <div class="form-group">
-                        <label>Finanzamt-Nummer</label>
-                        <input type="text" name="finanzamt_nr" placeholder="Finanzamt-Nr.">
+                        <label>Steuer-Identifikationsnummer <span class="required">*</span></label>
+                        <input type="text" name="steuer_id" placeholder="12345678901" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Steuerklasse</label>
-                        <select name="steuerklasse">
+                        <label>Steuerklasse <span class="required">*</span></label>
+                        <select name="steuerklasse" required>
                             <option value="">Bitte wählen...</option>
                             <option value="I">I</option>
                             <option value="II">II</option>
@@ -843,52 +831,136 @@ include 'header.php';
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Kinderfreibeträge</label>
-                        <input type="number" name="kinderfreibetraege" placeholder="0" step="0.5" min="0">
+                        <label>Kinderfreibeträge <span class="required">*</span></label>
+                        <input type="number" name="kinderfreibetraege" placeholder="0" step="0.5" min="0" required>
                     </div>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Konfession</label>
-                        <select name="konfession">
-                            <option value="">Bitte wählen...</option>
-                            <option value="Evangelisch">Evangelisch (ev)</option>
-                            <option value="Katholisch">Katholisch (rk)</option>
-                            <option value="Keine">Keine</option>
-                            <option value="Sonstige">Sonstige</option>
-                        </select>
-                    </div>
-                </div>
             </div>
 
             <!-- Social Insurance Section -->
             <div class="form-section">
-                <h2>🏥 Sozialversicherung</h2>
+                <h2>Sozialversicherung</h2>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Krankenkasse</label>
-                        <input type="text" name="krankenkasse" placeholder="Name der Krankenkasse">
-                    </div>
-                    <div class="form-group">
-                        <label>Elterneigenschaft</label>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="eltern_ja" name="elterneigenschaft" value="Ja">
-                                <label for="eltern_ja">Ja</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="eltern_nein" name="elterneigenschaft" value="Nein">
-                                <label for="eltern_nein">Nein</label>
-                            </div>
-                        </div>
+                        <label>Krankenkasse <span class="required">*</span></label>
+                        <select name="krankenkasse" required>
+                            <option value="">Bitte wählen...</option>
+                            <option value="AOK Baden-Würt., Dir. Hauptver">AOK Baden-Würt., Dir. Hauptver</option>
+                            <option value="AOK Bayern Die Gesundheitskass">AOK Bayern Die Gesundheitskass</option>
+                            <option value="AOK Bremen/Bremerhaven">AOK Bremen/Bremerhaven</option>
+                            <option value="AOK Hessen">AOK Hessen</option>
+                            <option value="AOK Niedersachsen">AOK Niedersachsen</option>
+                            <option value="AOK Nordost">AOK Nordost</option>
+                            <option value="AOK NordWest">AOK NordWest</option>
+                            <option value="AOK PLUS">AOK PLUS</option>
+                            <option value="AOK Rheinland/Hamburg Die Gesu">AOK Rheinland/Hamburg Die Gesu</option>
+                            <option value="AOK Rheinland-Pfalz/Saarland">AOK Rheinland-Pfalz/Saarland</option>
+                            <option value="AOK Sachsen-Anhalt">AOK Sachsen-Anhalt</option>
+                            <option value="AKA">AKA</option>
+                            <option value="Audi BKK">Audi BKK</option>
+                            <option value="BAHN-BKK">BAHN-BKK</option>
+                            <option value="BARMER">BARMER</option>
+                            <option value="BERGISCHE KRANKENKASSE">BERGISCHE KRANKENKASSE</option>
+                            <option value="BIG direkt gesund">BIG direkt gesund</option>
+                            <option value="BKK Akzo Nobel Bayern">BKK Akzo Nobel Bayern</option>
+                            <option value="BKK B. Braun Aesculap">BKK B. Braun Aesculap</option>
+                            <option value="BKK Deutsche Bank AG">BKK Deutsche Bank AG</option>
+                            <option value="BKK Diakonie">BKK Diakonie</option>
+                            <option value="BKK DürkoppAdler">BKK DürkoppAdler</option>
+                            <option value="BKK EUREGI">BKK EUREGI</option>
+                            <option value="BKK EWE">BKK EWE</option>
+                            <option value="BKK exklusiv">BKK exklusiv</option>
+                            <option value="BKK Faber-Castell & Partner">BKK Faber-Castell & Partner</option>
+                            <option value="BKK firmus">BKK firmus</option>
+                            <option value="BKK FREUDENBERG">BKK FREUDENBERG</option>
+                            <option value="BKK GILDEMEISTER SEIDENSTICKER">BKK GILDEMEISTER SEIDENSTICKER</option>
+                            <option value="BKK Groz-Beckert">BKK Groz-Beckert</option>
+                            <option value="BKK Herkules">BKK Herkules</option>
+                            <option value="BKK Linde">BKK Linde</option>
+                            <option value="BKK Miele">BKK Miele</option>
+                            <option value="BKK MTU">BKK MTU</option>
+                            <option value="BKK PFAFF">BKK PFAFF</option>
+                            <option value="BKK Pfalz">BKK Pfalz</option>
+                            <option value="BKK ProVita">BKK ProVita</option>
+                            <option value="BKK Public">BKK Public</option>
+                            <option value="BKK PwC">BKK PwC</option>
+                            <option value="BKK Rieker.RICOSTA.Weisser">BKK Rieker.RICOSTA.Weisser</option>
+                            <option value="BKK Salzgitter">BKK Salzgitter</option>
+                            <option value="BKK Scheufelen">BKK Scheufelen</option>
+                            <option value="BKK Schwarzwald-Baar-Heuberg">BKK Schwarzwald-Baar-Heuberg</option>
+                            <option value="BKK Technoform">BKK Technoform</option>
+                            <option value="BKK VerbundPlus">BKK VerbundPlus</option>
+                            <option value="BKK VDN">BKK VDN</option>
+                            <option value="BKK Werra-Meissner">BKK Werra-Meissner</option>
+                            <option value="BKK Wirtschaft & Finanzen">BKK Wirtschaft & Finanzen</option>
+                            <option value="BKK Würth">BKK Würth</option>
+                            <option value="BKK24">BKK24</option>
+                            <option value="BMW BKK">BMW BKK</option>
+                            <option value="BOSCH BKK">BOSCH BKK</option>
+                            <option value="Bertelsmann BKK">Bertelsmann BKK</option>
+                            <option value="bkk melitta hmr">bkk melitta hmr</option>
+                            <option value="Bundesknappschaft Ost">Bundesknappschaft Ost</option>
+                            <option value="Bundesknappschaft West">Bundesknappschaft West</option>
+                            <option value="Continentale Betriebskrankenka">Continentale Betriebskrankenka</option>
+                            <option value="DAK-Gesundheit">DAK-Gesundheit</option>
+                            <option value="Debeka BKK">Debeka BKK</option>
+                            <option value="EY BKK">EY BKK</option>
+                            <option value="energie-BKK">energie-BKK</option>
+                            <option value="HEK">HEK</option>
+                            <option value="Heimat Krankenkasse">Heimat Krankenkasse</option>
+                            <option value="hkk">hkk</option>
+                            <option value="IKK BB">IKK BB</option>
+                            <option value="IKK classic">IKK classic</option>
+                            <option value="IKK - Die Innovationskasse">IKK - Die Innovationskasse</option>
+                            <option value="IKK gesund plus (Ost)">IKK gesund plus (Ost)</option>
+                            <option value="IKK Südwest">IKK Südwest</option>
+                            <option value="KARL MAYER BKK">KARL MAYER BKK</option>
+                            <option value="KKH">KKH</option>
+                            <option value="Knappschaft (allg. Verf. einsc)">Knappschaft (allg. Verf. einsc)</option>
+                            <option value="Knappschaft (als See-Krankenve)">Knappschaft (als See-Krankenve)</option>
+                            <option value="Knappschaft (Ang. mit Mehrleis)">Knappschaft (Ang. mit Mehrleis)</option>
+                            <option value="Knappschaft (bes. knappschaftl)">Knappschaft (bes. knappschaftl)</option>
+                            <option value="Koenig & Bauer BKK">Koenig & Bauer BKK</option>
+                            <option value="Krones BKK">Krones BKK</option>
+                            <option value="MAHLE BKK">MAHLE BKK</option>
+                            <option value="Mercedes-Benz BKK">Mercedes-Benz BKK</option>
+                            <option value="Merck BKK">Merck BKK</option>
+                            <option value="mhplus BKK West">mhplus BKK West</option>
+                            <option value="mkk - meine krankenkasse">mkk - meine krankenkasse</option>
+                            <option value="Mobil Krankenkasse">Mobil Krankenkasse</option>
+                            <option value="NOVITAS BKK">NOVITAS BKK</option>
+                            <option value="pronova BKK">pronova BKK</option>
+                            <option value="R+V Betriebskrankenkasse">R+V Betriebskrankenkasse</option>
+                            <option value="Salus BKK">Salus BKK</option>
+                            <option value="SBK">SBK</option>
+                            <option value="SECURVITA BKK">SECURVITA BKK</option>
+                            <option value="SKD BKK">SKD BKK</option>
+                            <option value="Südzucker BKK">Südzucker BKK</option>
+                            <option value="SVLFG, Landw. Krankenkasse (eh">SVLFG, Landw. Krankenkasse (eh</option>
+                            <option value="SVLFG, Landw. Krankenkasse, Ba">SVLFG, Landw. Krankenkasse, Ba</option>
+                            <option value="SVLFG, Landw. Krankenkasse, Da">SVLFG, Landw. Krankenkasse, Da</option>
+                            <option value="SVLFG, Landw. Krankenkasse, Ha">SVLFG, Landw. Krankenkasse, Ha</option>
+                            <option value="SVLFG, Landw. Krankenkasse, Ho">SVLFG, Landw. Krankenkasse, Ho</option>
+                            <option value="SVLFG, Landw. Krankenkasse, Ka">SVLFG, Landw. Krankenkasse, Ka</option>
+                            <option value="SVLFG, Landw. Krankenkasse, Ki">SVLFG, Landw. Krankenkasse, Ki</option>
+                            <option value="SVLFG, Landw. Krankenkasse, La">SVLFG, Landw. Krankenkasse, La</option>
+                            <option value="SVLFG, Landw. Krankenkasse, Mü">SVLFG, Landw. Krankenkasse, Mü</option>
+                            <option value="SVLFG, Landw. Krankenkasse, St">SVLFG, Landw. Krankenkasse, St</option>
+                            <option value="Techniker Krankenkasse">Techniker Krankenkasse</option>
+                            <option value="TUI BKK">TUI BKK</option>
+                            <option value="VIACTIV Krankenkasse">VIACTIV Krankenkasse</option>
+                            <option value="vivida bkk">vivida bkk</option>
+                            <option value="WMF BKK">WMF BKK</option>
+                            <option value="ZF BKK">ZF BKK</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
             <!-- Compensation Section -->
             <div class="form-section">
-                <h2>💰 Entlohnung</h2>
+                <h2>Entlohnung</h2>
                 <div class="form-row">
                     <div class="form-group">
                         <label>Bezeichnung 1</label>
@@ -921,7 +993,7 @@ include 'header.php';
 
             <!-- File Upload Section -->
             <div class="file-upload-section">
-                <h3>📎 Zusätzliche Dokumente</h3>
+                <h3>Zusätzliche Dokumente</h3>
                 <p style="color: #6c757d; margin-bottom: 15px; font-size: 14px;">
                     Fügen Sie weitere Dokumente hinzu (z.B. Lebenslauf, Zeugnisse, Zertifikate)
                 </p>
@@ -944,7 +1016,7 @@ include 'header.php';
 
             <!-- Signature Section -->
             <div class="signature-section">
-                <h3>✍️ Unterschrift <span class="required">*</span></h3>
+                <h3>Unterschrift <span class="required">*</span></h3>
                 
                 <div class="signature-tabs">
                     <button type="button" class="tab-btn active" data-tab="draw">Zeichnen</button>
@@ -983,7 +1055,7 @@ include 'header.php';
             </div>
 
             <button type="submit" class="btn btn-primary" id="submitBtn">
-                📨 Formular absenden
+                Formular absenden
             </button>
         </form>
 
@@ -1030,6 +1102,41 @@ include 'header.php';
         canvas.addEventListener("touchstart", handleTouch);
         canvas.addEventListener("touchmove", handleTouch);
         canvas.addEventListener("touchend", stopDrawing);
+
+        // Payment method toggle
+        initPaymentMethodToggle();
+    };
+
+    // Payment method toggle function
+    function initPaymentMethodToggle() {
+        const ibanFields = document.getElementById("ibanFields");
+        const ibanInput = document.getElementById("ibanInput");
+        const bicInput = document.getElementById("bicInput");
+        const zahlungsartRadios = document.querySelectorAll('input[name="zahlungsart"]');
+
+        // Function to toggle IBAN fields visibility
+        function toggleIbanFields() {
+            const selectedValue = document.querySelector('input[name="zahlungsart"]:checked').value;
+            if (selectedValue === "IBAN") {
+                ibanFields.style.display = "flex";
+                ibanInput.setAttribute("required", "required");
+                bicInput.setAttribute("required", "required");
+            } else {
+                ibanFields.style.display = "none";
+                ibanInput.removeAttribute("required");
+                bicInput.removeAttribute("required");
+                ibanInput.value = "";
+                bicInput.value = "";
+            }
+        }
+
+        // Add event listeners to radio buttons
+        zahlungsartRadios.forEach(radio => {
+            radio.addEventListener("change", toggleIbanFields);
+        });
+
+        // Initialize on page load
+        toggleIbanFields();
     };
 
     function startDrawing(e) {
@@ -1373,21 +1480,23 @@ include 'header.php';
         addField("Versicherungsnummer", data.versicherungsnummer);
         addField("Geburtsort", data.geburtsort);
         addField("Schwerbehindert", data.schwerbehindert);
-        addField("IBAN", data.iban);
-        addField("BIC", data.bic);
+        addField("Zahlungsart", data.zahlungsart || "");
+        if (data.zahlungsart === "IBAN") {
+            addField("IBAN", data.iban);
+            addField("BIC", data.bic);
+        }
 
         yPos += 5;
 
         // Employment
         addSection("Beschäftigung");
         addField("Eintrittsdatum", data.eintrittsdatum);
-        addField("Beschäftigungsbetrieb", data.beschaeftigungsbetrieb);
         addField("Berufsbezeichnung", data.berufsbezeichnung);
         addField("Ausgeübte Tätigkeit", data.ausgeuebte_taetigkeit);
         addField("Art", data.beschaeftigungsart);
         addField("Probezeit", data.probezeit);
         addField("Wöchentliche Arbeitszeit", data.wochenarbeitszeit ? data.wochenarbeitszeit + " Std." : "");
-        addField("Arbeitszeit-Typ", data.arbeitszeit_typ);
+        addField("Monatliche Arbeitszeit", data.monatliche_arbeitszeit ? data.monatliche_arbeitszeit + " Std." : "");
         
         if (data.mo || data.di || data.mi || data.do || data.fr || data.sa || data.so) {
             let distribution = "Mo:" + (data.mo||0) + " Di:" + (data.di||0) + " Mi:" + (data.mi||0) + 
@@ -1395,33 +1504,26 @@ include 'header.php';
             addField("Stundenverteilung", distribution, true);
         }
         
-        addField("Urlaubsanspruch", data.urlaubsanspruch);
-
         yPos += 5;
 
         // Education
         addSection("Ausbildung");
         addField("Schulabschluss", data.schulabschluss);
         addField("Berufsausbildung", data.berufsausbildung);
-        addField("Ausbildungsbeginn", data.ausbildung_beginn);
-        addField("Ausbildungsende", data.ausbildung_ende);
 
         yPos += 5;
 
         // Tax
         addSection("Steuer");
         addField("Steuer-ID", data.steuer_id);
-        addField("Finanzamt-Nr", data.finanzamt_nr);
         addField("Steuerklasse", data.steuerklasse);
         addField("Kinderfreibeträge", data.kinderfreibetraege);
-        addField("Konfession", data.konfession);
 
         yPos += 5;
 
         // Social Insurance
         addSection("Sozialversicherung");
         addField("Krankenkasse", data.krankenkasse);
-        addField("Elterneigenschaft", data.elterneigenschaft);
 
         yPos += 5;
 
