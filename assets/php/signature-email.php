@@ -50,7 +50,7 @@ try {
     $firmaAdresse = isset($_POST['firma_adresse']) ? trim($_POST['firma_adresse']) : '';
     $pdfBase64 = isset($_POST['pdf']) ? $_POST['pdf'] : '';
     
-    // Primary company email (TO field)
+    // Recipients - both company and customer
     $companyEmail = 'info@exotaxx.com';
     
     // Always CC to this email
@@ -84,10 +84,10 @@ try {
     $from_email = 'noreply@' . ($_SERVER['HTTP_HOST'] ?? 'exotaxx.com');
     $from_name = 'ExoTaxx GmbH - Personalfragebogen';
     
-    debugLog("Email will be sent to: $companyEmail (CC: $ccEmail) from: $from_email");
+    debugLog("Email will be sent to: $companyEmail, $customerEmail (CC: $ccEmail) from: $from_email");
     
     // =====================================
-    // SEND EMAIL TO COMPANY
+    // SEND EMAIL TO COMPANY AND CUSTOMER
     // =====================================
     
     // Create a unique boundary
@@ -99,12 +99,16 @@ try {
     // Email headers
     $headers = "From: " . $from_name . " <" . $from_email . ">\r\n";
     $headers .= "Reply-To: " . $customerEmail . "\r\n";
+    
+    // Combine TO recipients
+    $toRecipients = $companyEmail . ", " . $customerEmail;
+    
     $headers .= "Cc: " . $ccEmail . "\r\n";
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: multipart/mixed; boundary=\"" . $boundary . "\"\r\n";
     $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
     
-    debugLog("Headers prepared with CC to: $ccEmail");
+    debugLog("Headers prepared - TO: $toRecipients, CC: $ccEmail");
     
     // Email body
     $message = "--" . $boundary . "\r\n";
@@ -193,13 +197,13 @@ try {
     
     debugLog("Message body prepared - Total size: " . strlen($message) . " bytes");
     
-    // Attempt to send email to company
+    // Attempt to send email to company and customer
     debugLog("Attempting to send email...");
     
-    $mailResult = @mail($companyEmail, $subject, $message, $headers);
+    $mailResult = @mail($toRecipients, $subject, $message, $headers);
     
     if ($mailResult) {
-        debugLog("Email sent successfully to $companyEmail (CC: $ccEmail)");
+        debugLog("Email sent successfully to $toRecipients (CC: $ccEmail)");
         
         $response['success'] = true;
         $response['message'] = 'Formular erfolgreich gesendet!';
