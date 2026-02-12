@@ -668,12 +668,42 @@ include 'header.php';
 
             <!-- Unterschrift -->
             <div class="signature-section">
-                <h3>Unterschrift *</h3>
+                <h3>Unterschrift <span class="required">*</span></h3>
+                
+                <div class="signature-tabs">
+                    <button type="button" class="tab-btn active" data-tab="draw">Zeichnen</button>
+                    <button type="button" class="tab-btn" data-tab="upload">Hochladen</button>
+                </div>
 
-                <canvas id="signatureCanvas" width="600" height="200" 
-                        style="border:2px solid #ccc; border-radius:8px;"></canvas>
-                <br>
-                <button type="button" onclick="clearCanvas()">Löschen</button>
+                <!-- Draw Tab -->
+                <div class="tab-content active" id="drawTab">
+                    <div class="canvas-container">
+                        <canvas id="signatureCanvas" width="600" height="200"></canvas>
+                        <div class="canvas-controls">
+                            <button type="button" class="btn btn-clear" onclick="clearCanvas()">Löschen</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upload Tab -->
+                <div class="tab-content" id="uploadTab">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📷</div>
+                        <p style="margin: 0 0 10px 0; font-weight: 600;">Unterschrift hochladen</p>
+                        <p style="margin: 0; color: #6c757d; font-size: 14px;">
+                            Klicken Sie hier oder ziehen Sie ein Bild hierher
+                        </p>
+                        <p style="margin: 10px 0 0 0; color: #6c757d; font-size: 12px;">
+                            Unterstützte Formate: PNG, JPG, JPEG
+                        </p>
+                    </div>
+                    <input type="file" id="signatureUpload" accept="image/*">
+                    <div class="signature-preview" id="signaturePreview">
+                        <img id="signatureImg" src="" alt="Unterschrift">
+                    </div>
+                </div>
+
+                <div class="error-message" id="signatureError"></div>
             </div>
 
             <button type="submit" class="btn btn-primary">
@@ -840,6 +870,7 @@ let canvas = document.getElementById("signatureCanvas");
 let ctx = canvas.getContext("2d");
 let isDrawing = false;
 let generatedPDF = null;
+let uploadedSignature = null;
 
 ctx.lineWidth = 2;
 ctx.lineCap = "round";
@@ -863,16 +894,90 @@ function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+// Tab switching
+document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", function() {
+        const tab = this.dataset.tab;
+        
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+        
+        this.classList.add("active");
+        document.getElementById(tab + "Tab").classList.add("active");
+    });
+});
+
+// Signature Upload
+const signatureUploadArea = document.getElementById("uploadArea");
+const signatureUpload = document.getElementById("signatureUpload");
+const signaturePreview = document.getElementById("signaturePreview");
+const signatureImg = document.getElementById("signatureImg");
+
+signatureUploadArea.addEventListener("click", () => {
+    signatureUpload.click();
+});
+
+signatureUploadArea.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    signatureUploadArea.classList.add("dragover");
+});
+
+signatureUploadArea.addEventListener("dragleave", () => {
+    signatureUploadArea.classList.remove("dragover");
+});
+
+signatureUploadArea.addEventListener("drop", (e) => {
+    e.preventDefault();
+    signatureUploadArea.classList.remove("dragover");
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith("image/")) {
+        processSignatureImage(file);
+    }
+});
+
+signatureUpload.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        processSignatureImage(file);
+    }
+});
+
+function processSignatureImage(file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        uploadedSignature = e.target.result;
+        signatureImg.src = uploadedSignature;
+        signaturePreview.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+}
+
 function validateSignature() {
-    const pixelData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-    return pixelData.some(channel => channel !== 0);
+    const activeTab = document.querySelector(".tab-btn.active").dataset.tab;
+    
+    if (activeTab === "draw") {
+        const pixelData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        return pixelData.some(channel => channel !== 0);
+    } else {
+        return uploadedSignature !== null;
+    }
+}
+
+function getSignatureImage() {
+    const activeTab = document.querySelector(".tab-btn.active").dataset.tab;
+    
+    if (activeTab === "draw") {
+        return canvas.toDataURL("image/png");
+    } else {
+        return uploadedSignature;
+    }
 }
 
 document.getElementById("personalForm").addEventListener("submit", async function(e){
     e.preventDefault();
 
     if (!validateSignature()) {
-        alert("Bitte unterschreiben.");
+        alert("Bitte unterschreiben Sie das Formular.");
         return;
     }
 
@@ -880,7 +985,7 @@ document.getElementById("personalForm").addEventListener("submit", async functio
 
     const formData = new FormData(this);
 
-    const signature = canvas.toDataURL("image/png");
+    const signature = getSignatureImage();
 
     await generatePDF(formData, signature);
 
