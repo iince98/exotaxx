@@ -51,7 +51,7 @@ try {
     $pdfBase64 = isset($_POST['pdf']) ? $_POST['pdf'] : '';
     
     // Recipients - both company and customer
-    $companyEmail = 'info@exotaxx.com';
+    $companyEmail = 'info@exotaxx.de';
     
     // Always CC to this email
     $ccEmail = 'iince98@gmail.com';
