@@ -201,7 +201,12 @@ $custom_css = '
     }
 
     #additionalFiles {
-        display: none;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        overflow: hidden;
+        z-index: -1;
     }
 
     .file-list {
@@ -551,132 +556,98 @@ include 'header.php';
 
 <div class="signature-container">
     <div class="signature-header">
-        <h1>Kündigungsformular für Mitarbeiter</h1>
+        <h1>Mitteilung über die Beendigung des Arbeitsverhältnisses</h1>
         <p>Bitte füllen Sie alle erforderlichen Felder aus</p>
     </div>
 
     <div class="form-content">
         <form id="personalForm" method="POST">
-            <!-- Personal Information Section -->
+
+            <!-- Firmeninformationen -->
             <div class="form-section">
-                <h2>Persönliche Angaben</h2>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Firma <span class="required">*</span> </label> 
-                        <input type="text" name="firma" placeholder="Firma eingeben" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Personalnummer</label>
-                        <input type="text" name="personalnummer" placeholder="Personalnummer">
-                    </div>
-                </div>
+                <h2>Firmeninformationen</h2>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Nachname <span class="required">*</span></label>
-                        <input type="text" name="familienname" placeholder="Nachname" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Geburtsname </label>
-                        <input type="text" name="geburtsname" placeholder="Geburtsname">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Vorname <span class="required">*</span></label>
-                        <input type="text" name="vorname" placeholder="Vorname" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Geburtsdatum <span class="required">*</span></label>
-                        <input type="date" name="geburtsdatum" required>
+                        <label>Firma *</label>
+                        <input type="text" name="firma" required>
                     </div>
                 </div>
 
                 <div class="form-row address-row">
                     <div class="form-group">
-                        <label>Straße und Hausnummer <span class="required">*</span></label>
-                        <input type="text" name="strasse" placeholder="Straße und Hausnummer" required>
-                    </div>
-                    <div class="form-group plz-group">
-                        <label>PLZ <span class="required">*</span></label>
-                        <input type="text" name="plz" placeholder="PLZ" maxlength="7" required>
+                        <label>Straße und Hausnummer *</label>
+                        <input type="text" name="strasse" required>
                     </div>
                     <div class="form-group">
-                        <label>Ort <span class="required">*</span></label>
-                        <input type="text" name="ort" placeholder="Ort" required>
+                        <label>PLZ *</label>
+                        <input type="text" name="plz" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ort *</label>
+                        <input type="text" name="ort" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>E-Mail (für Firma) <span class="required">*</span></label>
-                        <input type="email" name="customer_email" id="customer_email" placeholder="ihre.email@beispiel.de" required>
-                        <small style="color: #6c757d; font-size: 12px;">An diese Adresse wird eine Bestätigung gesendet</small>
+                        <label>E-Mail *</label>
+                        <input type="email" name="customer_email" required>
                     </div>
                     <div class="form-group">
-                        <label>Telefon <span class="required">*</span></label>
-                        <input type="tel" name="telefon" placeholder="+49 123 456789" required>
+                        <label>Telefon *</label>
+                        <input type="tel" name="telefon" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mitarbeiter -->
+            <div class="form-section">
+                <h2>Angaben zum Mitarbeiter</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nachname *</label>
+                        <input type="text" name="familienname" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Geburtsname</label>
+                        <input type="text" name="geburtsname">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Geschlecht <span class="required">*</span></label>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="geschlecht_m" name="geschlecht" value="Männlich" required>
-                                <label for="geschlecht_m">Männlich</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="geschlecht_w" name="geschlecht" value="Weiblich" required>
-                                <label for="geschlecht_w">Weiblich</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="geschlecht_d" name="geschlecht" value="Divers" required>
-                                <label for="geschlecht_d">Divers</label>
-                            </div>
-                        </div>
+                        <label>Vorname *</label>
+                        <input type="text" name="vorname" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Geburtsdatum *</label>
+                        <input type="date" name="geburtsdatum" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Staatsangehörigkeit <span class="required">*</span></label>
-                        <input type="text" name="staatsangehoerigkeit" placeholder="z.B. Deutsch" required>
+                        <label>Austrittsdatum *</label>
+                        <input type="date" name="austrittsdatum" required>
                     </div>
                     <div class="form-group">
-                        <label>Renten / Sozialversicherungsnummer <span class="required">*</span></label>
-                        <input type="text" name="versicherungsnummer" placeholder="z.B. 12 150785 M 001" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Geburtsort <span class="required">*</span></label>
-                        <input type="text" name="geburtsort" placeholder="Geburtsort" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Schwerbehindert <span class="required">*</span></label>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="schwerbehindert_ja" name="schwerbehindert" value="Ja" required>
-                                <label for="schwerbehindert_ja">Ja</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="schwerbehindert_nein" name="schwerbehindert" value="Nein" required>
-                                <label for="schwerbehindert_nein">Nein</label>
-                            </div>
-                        </div>
+                        <label>Wer hat gekündigt? *</label>
+                        <select name="kuendigung_durch" required>
+                            <option value="">Bitte auswählen</option>
+                            <option value="Arbeitgeber">Arbeitgeber</option>
+                            <option value="Arbeitnehmer">Arbeitnehmer</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
             <!-- File Upload Section -->
             <div class="file-upload-section">
-                <h3>Zusätzliche Dokumente <span style="color: #dc3545;">*</span></h3>
+                <h3>Kündigung Dokumente</h3>
                 <p style="color: #6c757d; margin-bottom: 15px; font-size: 14px;">
-                    Fügen Sie weitere Dokumente hinzu (z.B. Lebenslauf, Zeugnisse, Zertifikate)
+                    Fügen Sie weitere Kündigung Dokumente hinzu
                 </p>
                 
                 <div class="file-upload-area" id="fileUploadArea">
@@ -690,604 +661,308 @@ include 'header.php';
                     </p>
                 </div>
                 
-                <input type="file" id="additionalFiles" multiple accept="*/*" required>
+                <input type="file" id="additionalFiles" multiple required>
                 
                 <div id="fileList" class="file-list"></div>
             </div>
 
-            <!-- Signature Section -->
+            <!-- Unterschrift -->
             <div class="signature-section">
-                <h3>Unterschrift <span class="required">*</span></h3>
-                
-                <div class="signature-tabs">
-                    <button type="button" class="tab-btn active" data-tab="draw">Zeichnen</button>
-                    <button type="button" class="tab-btn" data-tab="upload">Hochladen</button>
-                </div>
+                <h3>Unterschrift *</h3>
 
-                <!-- Draw Tab -->
-                <div class="tab-content active" id="drawTab">
-                    <div class="canvas-container">
-                        <canvas id="signatureCanvas" width="600" height="200"></canvas>
-                        <div class="canvas-controls">
-                            <button type="button" class="btn btn-clear" onclick="clearCanvas()">Löschen</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Upload Tab -->
-                <div class="tab-content" id="uploadTab">
-                    <div class="upload-area" id="uploadArea">
-                        <div class="upload-icon">📷</div>
-                        <p style="margin: 0 0 10px 0; font-weight: 600;">Unterschrift hochladen</p>
-                        <p style="margin: 0; color: #6c757d; font-size: 14px;">
-                            Klicken Sie hier oder ziehen Sie ein Bild hierher
-                        </p>
-                        <p style="margin: 10px 0 0 0; color: #6c757d; font-size: 12px;">
-                            Unterstützte Formate: PNG, JPG, JPEG
-                        </p>
-                    </div>
-                    <input type="file" id="signatureUpload" accept="image/*">
-                    <div class="signature-preview" id="signaturePreview">
-                        <img id="signatureImg" src="" alt="Unterschrift">
-                    </div>
-                </div>
-
-                <div class="error-message" id="signatureError"></div>
+                <canvas id="signatureCanvas" width="600" height="200" 
+                        style="border:2px solid #ccc; border-radius:8px;"></canvas>
+                <br>
+                <button type="button" onclick="clearCanvas()">Löschen</button>
             </div>
 
-            <button type="submit" class="btn btn-primary" id="submitBtn">
+            <button type="submit" class="btn btn-primary">
                 Formular absenden
             </button>
+
         </form>
 
-        <div id="loading">
-            <div class="spinner"></div>
-            <p style="color: #667eea; font-weight: 600;">Wird verarbeitet...</p>
+        <div id="loading" style="display:none;">
+            Wird verarbeitet...
         </div>
     </div>
 </div>
 
-<!-- Success Modal -->
-<div id="successModal" class="modal">
-    <div class="modal-content">
-        <div class="success-icon">✅</div>
-        <h2>Erfolgreich gesendet!</h2>
-        <p>Ihr Personalfragebogen wurde erfolgreich übermittelt.<br>Sie erhalten eine Bestätigung per E-Mail.</p>
-        <button class="btn btn-success" onclick="closeModal()">Schließen</button>
-    </div>
-</div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <script>
-    let canvas, ctx, isDrawing = false;
-    let uploadedFile = null;
-    let formData = {};
-    let generatedPDF = null;
-    let uploadedFiles = [];
+// File upload click trigger and file handling
+document.addEventListener("DOMContentLoaded", function () {
 
-    // Initialize canvas
-    window.onload = function() {
-        canvas = document.getElementById("signatureCanvas");
-        ctx = canvas.getContext("2d");
-        ctx.strokeStyle = "#000";
-        ctx.lineWidth = 2;
-        ctx.lineCap = "round";
+const fileInput = document.getElementById("additionalFiles");
+const uploadArea = document.getElementById("fileUploadArea");
+const fileListContainer = document.getElementById("fileList");
 
-        // Mouse events
-        canvas.addEventListener("mousedown", startDrawing);
-        canvas.addEventListener("mousemove", draw);
-        canvas.addEventListener("mouseup", stopDrawing);
-        canvas.addEventListener("mouseout", stopDrawing);
-
-        // Touch events
-        canvas.addEventListener("touchstart", handleTouch);
-        canvas.addEventListener("touchmove", handleTouch);
-        canvas.addEventListener("touchend", stopDrawing);
-
-        // Payment method toggle
-        initPaymentMethodToggle();
-    };
-
-    // Payment method toggle function
-    function initPaymentMethodToggle() {
-        const ibanFields = document.getElementById("ibanFields");
-        const ibanInput = document.getElementById("ibanInput");
-        const bicInput = document.getElementById("bicInput");
-        const zahlungsartRadios = document.querySelectorAll('input[name="zahlungsart"]');
-
-        // Function to toggle IBAN fields visibility
-        function toggleIbanFields() {
-            const selectedValue = document.querySelector('input[name="zahlungsart"]:checked').value;
-            if (selectedValue === "IBAN") {
-                ibanFields.style.display = "flex";
-                ibanInput.setAttribute("required", "required");
-                bicInput.setAttribute("required", "required");
-            } else {
-                ibanFields.style.display = "none";
-                ibanInput.removeAttribute("required");
-                bicInput.removeAttribute("required");
-                ibanInput.value = "";
-                bicInput.value = "";
-            }
-        }
-
-        // Add event listeners to radio buttons
-        zahlungsartRadios.forEach(radio => {
-            radio.addEventListener("change", toggleIbanFields);
-        });
-
-        // Initialize on page load
-        toggleIbanFields();
-    };
-
-    function startDrawing(e) {
-        isDrawing = true;
-        const rect = canvas.getBoundingClientRect();
-        ctx.beginPath();
-        ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
-    }
-
-    function draw(e) {
-        if (!isDrawing) return;
-        const rect = canvas.getBoundingClientRect();
-        ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-        ctx.stroke();
-    }
-
-    function stopDrawing() {
-        isDrawing = false;
-    }
-
-    function handleTouch(e) {
-        e.preventDefault();
-        const touch = e.touches[0];
-        const mouseEvent = new MouseEvent(e.type === "touchstart" ? "mousedown" : "mousemove", {
-            clientX: touch.clientX,
-            clientY: touch.clientY
-        });
-        canvas.dispatchEvent(mouseEvent);
-    }
-
-    function clearCanvas() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
-    // Tab switching
-    document.querySelectorAll(".tab-btn").forEach(btn => {
-        btn.addEventListener("click", function() {
-            const tab = this.dataset.tab;
-            
-            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-            document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-            
-            this.classList.add("active");
-            document.getElementById(tab + "Tab").classList.add("active");
-        });
-    });
-
-    // File Upload Section
-    const fileUploadArea = document.getElementById("fileUploadArea");
-    const additionalFilesInput = document.getElementById("additionalFiles");
-    const fileList = document.getElementById("fileList");
-
-    fileUploadArea.addEventListener("click", () => {
-        additionalFilesInput.click();
-    });
-
-    fileUploadArea.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        fileUploadArea.classList.add("dragover");
-    });
-
-    fileUploadArea.addEventListener("dragleave", () => {
-        fileUploadArea.classList.remove("dragover");
-    });
-
-    fileUploadArea.addEventListener("drop", (e) => {
-        e.preventDefault();
-        fileUploadArea.classList.remove("dragover");
-        const files = e.dataTransfer.files;
-        handleFileSelection(files);
-    });
-
-    additionalFilesInput.addEventListener("change", (e) => {
-        handleFileSelection(e.target.files);
-    });
-
-    function handleFileSelection(files) {
-        for (let file of files) {
-            uploadedFiles.push(file);
-        }
-        displayFileList();
-    }
-
-    function displayFileList() {
-        fileList.innerHTML = '';
-        
-        uploadedFiles.forEach((file, index) => {
-            const fileItem = document.createElement('div');
-            fileItem.className = 'file-item';
-            
-            const fileSize = formatFileSize(file.size);
-            
-            fileItem.innerHTML = `
-                <div class="file-info">
-                    <div class="file-icon">📄</div>
-                    <div class="file-details">
-                        <div class="file-name">${file.name}</div>
-                        <div class="file-size">${fileSize}</div>
-                    </div>
-                </div>
-                <button type="button" class="file-remove" onclick="removeFile(${index})">
-                    ❌ Entfernen
-                </button>
-            `;
-            
-            fileList.appendChild(fileItem);
-        });
-    }
-
-    function removeFile(index) {
-        uploadedFiles.splice(index, 1);
-        displayFileList();
-    }
-
-    function formatFileSize(bytes) {
-        if (bytes === 0) return '0 Bytes';
-        const k = 1024;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
-    }
-
-    // Signature Upload
-    const uploadArea = document.getElementById("uploadArea");
-    const signatureUpload = document.getElementById("signatureUpload");
-    const signaturePreview = document.getElementById("signaturePreview");
-    const signatureImg = document.getElementById("signatureImg");
-
+if (fileInput && uploadArea) {
     uploadArea.addEventListener("click", () => {
-        signatureUpload.click();
+        fileInput.click();
     });
-
+    
+    // Handle file selection
+    fileInput.addEventListener("change", function() {
+        displayFiles(this.files);
+    });
+    
+    // Drag and drop functionality
     uploadArea.addEventListener("dragover", (e) => {
         e.preventDefault();
         uploadArea.classList.add("dragover");
     });
-
+    
     uploadArea.addEventListener("dragleave", () => {
         uploadArea.classList.remove("dragover");
     });
-
+    
     uploadArea.addEventListener("drop", (e) => {
         e.preventDefault();
         uploadArea.classList.remove("dragover");
-        const file = e.dataTransfer.files[0];
-        if (file && file.type.startsWith("image/")) {
-            processSignatureImage(file);
+        
+        const dt = new DataTransfer();
+        const existingFiles = fileInput.files;
+        
+        // Add existing files
+        for (let i = 0; i < existingFiles.length; i++) {
+            dt.items.add(existingFiles[i]);
         }
-    });
-
-    signatureUpload.addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            processSignatureImage(file);
+        
+        // Add dropped files
+        for (let i = 0; i < e.dataTransfer.files.length; i++) {
+            dt.items.add(e.dataTransfer.files[i]);
         }
+        
+        fileInput.files = dt.files;
+        displayFiles(fileInput.files);
     });
+}
 
-    function processSignatureImage(file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            uploadedFile = e.target.result;
-            signatureImg.src = uploadedFile;
-            signaturePreview.style.display = "block";
-        };
-        reader.readAsDataURL(file);
+function displayFiles(files) {
+    fileListContainer.innerHTML = "";
+    
+    if (files.length === 0) {
+        return;
+    }
+    
+    Array.from(files).forEach((file, index) => {
+        const fileItem = document.createElement("div");
+        fileItem.className = "file-item";
+        
+        const fileInfo = document.createElement("div");
+        fileInfo.className = "file-info";
+        
+        const fileIcon = document.createElement("div");
+        fileIcon.className = "file-icon";
+        fileIcon.textContent = getFileIcon(file.name);
+        
+        const fileDetails = document.createElement("div");
+        fileDetails.className = "file-details";
+        
+        const fileName = document.createElement("div");
+        fileName.className = "file-name";
+        fileName.textContent = file.name;
+        
+        const fileSize = document.createElement("div");
+        fileSize.className = "file-size";
+        fileSize.textContent = formatFileSize(file.size);
+        
+        fileDetails.appendChild(fileName);
+        fileDetails.appendChild(fileSize);
+        
+        fileInfo.appendChild(fileIcon);
+        fileInfo.appendChild(fileDetails);
+        
+        const removeBtn = document.createElement("button");
+        removeBtn.className = "file-remove";
+        removeBtn.type = "button";
+        removeBtn.innerHTML = "🗑️ Entfernen";
+        removeBtn.onclick = () => removeFile(index);
+        
+        fileItem.appendChild(fileInfo);
+        fileItem.appendChild(removeBtn);
+        
+        fileListContainer.appendChild(fileItem);
+    });
+}
+
+function removeFile(indexToRemove) {
+    const dt = new DataTransfer();
+    const files = fileInput.files;
+    
+    for (let i = 0; i < files.length; i++) {
+        if (i !== indexToRemove) {
+            dt.items.add(files[i]);
+        }
+    }
+    
+    fileInput.files = dt.files;
+    displayFiles(fileInput.files);
+}
+
+function getFileIcon(filename) {
+    const ext = filename.split('.').pop().toLowerCase();
+    
+    const iconMap = {
+        'pdf': '📄',
+        'doc': '📝',
+        'docx': '📝',
+        'xls': '📊',
+        'xlsx': '📊',
+        'jpg': '🖼️',
+        'jpeg': '🖼️',
+        'png': '🖼️',
+        'gif': '🖼️',
+        'zip': '📦',
+        'rar': '📦',
+        'txt': '📃',
+        'csv': '📈'
+    };
+    
+    return iconMap[ext] || '📎';
+}
+
+function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+}
+
+});
+
+let canvas = document.getElementById("signatureCanvas");
+let ctx = canvas.getContext("2d");
+let isDrawing = false;
+let generatedPDF = null;
+
+ctx.lineWidth = 2;
+ctx.lineCap = "round";
+
+canvas.addEventListener("mousedown", e => {
+    isDrawing = true;
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+});
+
+canvas.addEventListener("mousemove", e => {
+    if (!isDrawing) return;
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+});
+
+canvas.addEventListener("mouseup", () => isDrawing = false);
+canvas.addEventListener("mouseout", () => isDrawing = false);
+
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function validateSignature() {
+    const pixelData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    return pixelData.some(channel => channel !== 0);
+}
+
+document.getElementById("personalForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    if (!validateSignature()) {
+        alert("Bitte unterschreiben.");
+        return;
     }
 
-    // Validation
-    function validateForm() {
-        const signatureError = document.getElementById("signatureError");
-        let isValid = true;
+    document.getElementById("loading").style.display = "block";
 
-        // Check signature
-        const activeTab = document.querySelector(".tab-btn.active").dataset.tab;
-        
-        if (activeTab === "draw") {
-            const canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const pixels = canvasData.data;
-            let hasDrawing = false;
-            
-            for (let i = 0; i < pixels.length; i += 4) {
-                if (pixels[i + 3] > 0) {
-                    hasDrawing = true;
-                    break;
-                }
-            }
-            
-            if (!hasDrawing) {
-                signatureError.textContent = "Bitte zeichnen Sie Ihre Unterschrift";
-                signatureError.style.display = "block";
-                isValid = false;
-            } else {
-                signatureError.style.display = "none";
-            }
-        } else {
-            if (!uploadedFile) {
-                signatureError.textContent = "Bitte laden Sie ein Unterschriftsbild hoch";
-                signatureError.style.display = "block";
-                isValid = false;
-            } else {
-                signatureError.style.display = "none";
-            }
-        }
-        
-        return isValid;
-    }
+    const formData = new FormData(this);
 
-    // Form submission
-    document.getElementById("personalForm").addEventListener("submit", async function(e) {
-        e.preventDefault();
+    const signature = canvas.toDataURL("image/png");
 
-        if (!validateForm()) {
-            return;
-        }
+    await generatePDF(formData, signature);
 
-        // Show loading
-        document.getElementById("loading").style.display = "block";
-        this.style.display = "none";
+    const pdfBase64 = generatedPDF.output("datauristring").split(",")[1];
 
-        // Collect all form data
-        const form = e.target;
-        formData = {};
-        
-        // Get all form elements
-        const formElements = form.elements;
-        for (let i = 0; i < formElements.length; i++) {
-            const element = formElements[i];
-            if (element.name) {
-                if (element.type === 'checkbox') {
-                    formData[element.name] = element.checked;
-                } else if (element.type === 'radio') {
-                    if (element.checked) {
-                        formData[element.name] = element.value;
-                    }
-                } else {
-                    formData[element.name] = element.value;
-                }
-            }
-        }
+    const sendData = new FormData();
+    sendData.append("pdf", pdfBase64);
+    sendData.append("customer_email", formData.get("customer_email"));
+    sendData.append("name", formData.get("familienname") + ", " + formData.get("vorname"));
+    const files = document.getElementById("additionalFiles").files;
 
-        // Get signature
-        const activeTab = document.querySelector(".tab-btn.active").dataset.tab;
-        let signatureImage;
-        
-        if (activeTab === "draw") {
-            signatureImage = canvas.toDataURL("image/png");
-        } else {
-            signatureImage = uploadedFile;
-        }
-
-        // Generate PDF and send email
-        try {
-            await generatePDF(formData, signatureImage);
-            await sendEmail();
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Fehler beim Senden. Bitte versuchen Sie es erneut.");
-            document.getElementById("loading").style.display = "none";
-            this.style.display = "block";
-        }
-    });
-
-    async function generatePDF(data, signature) {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        let yPos = 20;
-        const leftMargin = 20;
-        const pageHeight = 280;
-
-        // Helper function to check if new page is needed
-        function checkNewPage(neededSpace = 10) {
-            if (yPos + neededSpace > pageHeight) {
-                doc.addPage();
-                yPos = 20;
-            }
-        }
-
-        // Title
-        doc.setFontSize(18);
-        doc.setTextColor(102, 126, 234);
-        doc.text("Personalfragebogen für Mitarbeiter", 105, yPos, { align: "center" });
-        
-        yPos += 10;
-        doc.setDrawColor(102, 126, 234);
-        doc.setLineWidth(0.5);
-        doc.line(20, yPos, 190, yPos);
-        
-        yPos += 15;
-
-        // Section helper function
-        function addSection(title) {
-            checkNewPage(20);
-            doc.setFontSize(14);
-            doc.setTextColor(102, 126, 234);
-            doc.text(title, leftMargin, yPos);
-            yPos += 8;
-        }
-
-        // Field helper function
-        function addField(label, value, newLine = false) {
-            if (!value || value === "false") return;
-            
-            checkNewPage();
-            doc.setFontSize(10);
-            doc.setTextColor(0, 0, 0);
-            doc.setFont(undefined, "bold");
-            doc.text(label + ":", leftMargin, yPos);
-            doc.setFont(undefined, "normal");
-            
-            const labelWidth = doc.getTextWidth(label + ": ");
-            const valueX = newLine ? leftMargin : leftMargin + labelWidth + 2;
-            
-            if (newLine) {
-                yPos += 5;
-            }
-            
-            // Handle long text
-            const maxWidth = 170 - (newLine ? 0 : labelWidth);
-            const splitText = doc.splitTextToSize(String(value), maxWidth);
-            doc.text(splitText, valueX, yPos);
-            
-            yPos += (splitText.length * 5) + 2;
-        }
-
-        // Personal Information
-        addSection("Persönliche Angaben");
-        addField("Firma", data.firma);
-        addField("Firma Adresse", data.firma_adresse);
-        addField("Personalnummer", data.personalnummer);
-        addField("Nachname", data.familienname);
-        addField("Geburtsname", data.geburtsname);
-        addField("Vorname", data.vorname);
-        addField("Geburtsdatum", data.geburtsdatum);
-        addField("Straße", data.strasse);
-        addField("PLZ/Ort", data.plz + " " + data.ort);
-        addField("E-Mail", data.customer_email);
-        addField("Telefon", data.telefon);
-        addField("Geschlecht", data.geschlecht);
-        addField("Staatsangehörigkeit", data.staatsangehoerigkeit);
-        addField("Versicherungsnummer", data.versicherungsnummer);
-        addField("Geburtsort", data.geburtsort);
-        addField("Schwerbehindert", data.schwerbehindert);
-        addField("Zahlungsart", data.zahlungsart || "");
-        if (data.zahlungsart === "IBAN") {
-            addField("IBAN", data.iban);
-            addField("BIC", data.bic);
-        }
-
-        yPos += 5;
-
-        // Employment
-        addSection("Beschäftigung");
-        addField("Eintrittsdatum", data.eintrittsdatum);
-        addField("Berufsbezeichnung", data.berufsbezeichnung);
-        addField("Ausgeübte Tätigkeit", data.ausgeuebte_taetigkeit);
-        addField("Art", data.beschaeftigungsart);
-        addField("Probezeit", data.probezeit);
-        addField("Wöchentliche Arbeitszeit", data.wochenarbeitszeit ? data.wochenarbeitszeit + " Std." : "");
-        addField("Monatliche Arbeitszeit", data.monatliche_arbeitszeit ? data.monatliche_arbeitszeit + " Std." : "");
-        
-        if (data.mo || data.di || data.mi || data.do || data.fr || data.sa || data.so) {
-            let distribution = "Mo:" + (data.mo||0) + " Di:" + (data.di||0) + " Mi:" + (data.mi||0) + 
-                              " Do:" + (data.do||0) + " Fr:" + (data.fr||0) + " Sa:" + (data.sa||0) + " So:" + (data.so||0);
-            addField("Stundenverteilung", distribution, true);
-        }
-        
-        yPos += 5;
-
-        // Education
-        addSection("Ausbildung");
-        addField("Schulabschluss", data.schulabschluss);
-        addField("Berufsausbildung", data.berufsausbildung);
-
-        yPos += 5;
-
-        // Tax
-        addSection("Steuer");
-        addField("Steuer-ID", data.steuer_id);
-        addField("Steuerklasse", data.steuerklasse);
-        addField("Kinderfreibeträge", data.kinderfreibetraege);
-
-        yPos += 5;
-
-        // Social Insurance
-        addSection("Sozialversicherung");
-        addField("Krankenkasse", data.krankenkasse);
-
-        yPos += 5;
-
-        // Compensation
-        if (data.lohn_bezeichnung1 || data.lohn_betrag1) {
-            addSection("Entlohnung");
-            addField(data.lohn_bezeichnung1 || "Gehalt", data.lohn_betrag1 ? "€ " + data.lohn_betrag1 : "");
-            if (data.lohn_bezeichnung2) {
-                addField(data.lohn_bezeichnung2, data.lohn_betrag2 ? "€ " + data.lohn_betrag2 : "");
-            }
-            if (data.stundenlohn) {
-                addField("Stundenlohn", "€ " + data.stundenlohn);
-            }
-            yPos += 5;
-        }
-
-        // Signature
-        checkNewPage(50);
-        doc.setFontSize(12);
-        doc.setTextColor(0, 0, 0);
-        doc.setFont(undefined, "bold");
-        doc.text("Unterschrift Arbeitnehmer:", leftMargin, yPos);
-        
-        yPos += 5;
-        doc.addImage(signature, "PNG", leftMargin, yPos, 60, 25);
-        
-        yPos += 30;
-        doc.setFont(undefined, "normal");
-        doc.setFontSize(9);
-        doc.text("Datum: " + new Date().toLocaleDateString("de-DE"), leftMargin, yPos);
-
-        // Footer
-        doc.setFontSize(8);
-        doc.setTextColor(150, 150, 150);
-        doc.text("Erstellt am: " + new Date().toLocaleString("de-DE"), 105, 285, { align: "center" });
-
-        generatedPDF = doc;
-    }
-
-    async function sendEmail() {
-        if (!generatedPDF) {
-            throw new Error("No PDF available");
-        }
-
-        const pdfBase64 = generatedPDF.output("datauristring").split(",")[1];
-        const formDataToSend = new FormData();
-        
-        // Add basic info
-        formDataToSend.append("name", formData.familienname + ", " + formData.vorname);
-        formDataToSend.append("customer_email", formData.customer_email);
-        formDataToSend.append("firma_adresse", formData.firma_adresse || "");
-        formDataToSend.append("pdf", pdfBase64);
-
-        // Add additional uploaded files
-        uploadedFiles.forEach((file, index) => {
-            formDataToSend.append('attachments[]', file);
-        });
-
-        const response = await fetch("assets/php/signature-email.php", {
-            method: "POST",
-            body: formDataToSend
-        });
-        
-        const data = await response.json();
-        
-        // Hide loading
+    if (files.length === 0) {
+        alert("Bitte mindestens ein Kündigungsdokument hochladen.");
         document.getElementById("loading").style.display = "none";
-        
-        if (data.success) {
-            // Show success modal
-            document.getElementById("successModal").style.display = "flex";
-        } else {
-            throw new Error(data.message || "Fehler beim Senden");
-        }
+        return;
     }
 
-    function closeModal() {
-        document.getElementById("successModal").style.display = "none";
-        location.reload();
+    // Append ALL files
+    for (let i = 0; i < files.length; i++) {
+        sendData.append("attachments[]", files[i]);
     }
+    const response = await fetch("assets/php/kuendigung-email.php", {
+        method: "POST",
+        body: sendData
+    });
+
+    const result = await response.json();
+
+    document.getElementById("loading").style.display = "none";
+
+    if(result.success){
+        alert("Erfolgreich gesendet!");
+        location.reload();
+    } else {
+        alert("Fehler beim Senden.");
+    }
+});
+
+async function generatePDF(data, signature) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    let y = 20;
+
+    function add(label, value){
+        if(!value) return;
+        doc.setFont(undefined,"bold");
+        doc.text(label+":",20,y);
+        doc.setFont(undefined,"normal");
+        doc.text(String(value),80,y);
+        y+=8;
+    }
+
+    doc.setFontSize(16);
+    doc.text("Mitteilung über die Beendigung des Arbeitsverhältnisses",105,y,{align:"center"});
+    y+=15;
+
+    doc.setFontSize(12);
+
+    add("Firma", data.get("firma"));
+    add("Straße", data.get("strasse"));
+    add("PLZ/Ort", data.get("plz")+" "+data.get("ort"));
+    add("E-Mail", data.get("customer_email"));
+    add("Telefon", data.get("telefon"));
+
+    y+=10;
+
+    add("Nachname", data.get("familienname"));
+    add("Geburtsname", data.get("geburtsname"));
+    add("Vorname", data.get("vorname"));
+    add("Geburtsdatum", data.get("geburtsdatum"));
+    add("Austrittsdatum", data.get("austrittsdatum"));
+    add("Kündigung durch", data.get("kuendigung_durch"));
+
+    y+=15;
+
+    doc.text("Unterschrift:",20,y);
+    y+=5;
+    doc.addImage(signature,"PNG",20,y,60,25);
+
+    generatedPDF = doc;
+}
 </script>
 
-<?php 
-// Include footer
-include 'footer.php'; 
-?>
+<?php include 'footer.php'; ?>

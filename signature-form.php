@@ -566,8 +566,8 @@ include 'header.php';
                         <input type="text" name="firma" placeholder="Firma eingeben" required>
                     </div>
                     <div class="form-group">
-                        <label>Personalnummer</label>
-                        <input type="text" name="personalnummer" placeholder="Personalnummer">
+                        <label>Firma Adresse <span class="required">*</span> </label> 
+                        <input type="text" name="firma_adresse" placeholder="Firma Adresse eingeben" required>
                     </div>
                 </div>
 
@@ -1545,7 +1545,7 @@ include 'header.php';
         doc.setFontSize(12);
         doc.setTextColor(0, 0, 0);
         doc.setFont(undefined, "bold");
-        doc.text("Unterschrift Arbeitnehmer:", leftMargin, yPos);
+        doc.text("Unterschrift Arbeitgeber:", leftMargin, yPos);
         
         yPos += 5;
         doc.addImage(signature, "PNG", leftMargin, yPos, 60, 25);
