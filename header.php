@@ -117,10 +117,13 @@
                                         <li><a href="about.php">Über uns</a></li>
                                     
                                         <li class="has-sub">
-                                            <a href="#">Online Anfrage</a>
+                                            <a href="#">Online Anträge</a>
                                             <ul>
                                                 <li>
                                                     <a href="signature-form.php">Personalfragebogen</a>
+                                                </li>
+                                                <li>
+                                                    <a href="kuendigungsformular.php">Abmeldung</a>
                                                 </li>
                                             </ul>
                                         </li>
