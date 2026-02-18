@@ -19,9 +19,8 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
+          protocol: ftp
           port: 21
-          # Add this line to handle the "control socket" issue:
-          ftp-ssl: true
-          # Often required for shared hosting:
-          dry-run: false
+          security: loose  # This tells the action to be less strict with the SSL handshake
+          local-dir: ./
+          server-dir: ./
