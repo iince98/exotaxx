@@ -556,7 +556,7 @@ include 'header.php';
 
 <div class="signature-container">
     <div class="signature-header">
-        <h1>Stundenzettel22</h1>
+        <h1>Stundenzettel</h1>
         <p>Bitte füllen Sie alle erforderlichen Felder aus</p>
     </div>
 
@@ -681,12 +681,13 @@ include 'header.php';
                         Klicken Sie hier oder ziehen Sie Dateien hierher
                     </p>
                     <p style="margin: 10px 0 0 0; color: #6c757d; font-size: 12px;">
-                        Alle Dateitypen sind erlaubt
+                        Erlaubte Formate: Word (.doc, .docx) und Excel (.xls, .xlsx)
                     </p>
                 </div>
                 
-                <input type="file" id="additionalFiles" multiple required>
-                
+                <input type="file" id="additionalFiles" multiple required 
+                    accept=".doc,.docx,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"> 
+                    
                 <div id="fileList" class="file-list"></div>
             </div>
 
