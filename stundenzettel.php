@@ -687,7 +687,7 @@ include 'header.php';
                 
                 <input type="file" id="additionalFiles" multiple required 
                     accept=".doc,.docx,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"> 
-                    
+
                 <div id="fileList" class="file-list"></div>
             </div>
 
@@ -1032,10 +1032,10 @@ document.getElementById("personalForm").addEventListener("submit", async functio
     for (let i = 0; i < files.length; i++) {
         sendData.append("attachments[]", files[i]);
     }
-    const response = await fetch("assets/php/kuendigung-email.php", {
+    const response = await fetch("assets/php/stundenzettel-email.php", {
         method: "POST",
         body: sendData
-    });
+            });
 
     const result = await response.json();
 
