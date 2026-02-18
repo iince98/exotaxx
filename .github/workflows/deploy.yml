@@ -19,7 +19,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: sftp
-          port: 22
-          local-dir: ./  # The folder in GitHub you want to upload
-          server-dir: ./ # The destination folder on Strato
+          protocol: ftps      # Changed from sftp
+          port: 21           # Changed from 22
+          local-dir: ./
+          server-dir: ./
