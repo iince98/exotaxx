@@ -116,6 +116,8 @@
     <!-- footer-end -->
 
     <!-- JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="assets/js/jquery-3.6.0.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/modernizr-3.5.0.min.js"></script>
@@ -135,6 +137,15 @@
     <script src="assets/js/jquery.meanmenu.min.js"></script>
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+    <script>
+        // Now you can safely use window.jspdf and doc.autoTable
+        document.getElementById("timesheetForm").addEventListener("submit", function(e) {
+            // ... (the rest of the code I provided in the previous step)
+        });
+    </script>
 
     <script>
         // Set current year in footer

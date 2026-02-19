@@ -1,16 +1,15 @@
 <?php
 /**
- * Email Handler for Timesheet (Stundenzettel)
- * Sends generated PDF + uploaded Excel/Word documents
+ * Email-Handler für die Stundenzettel-Einreichung
+ * Verarbeitet Formulardaten, dekodiert das PDF und versendet es als Anhang.
  */
 
-// ENABLE FULL ERROR REPORTING
+// ----------------- FEHLERBERICHTERSTATTUNG -----------------
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set('display_errors', 0); // In Produktion auf 0 setzen
 ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '/stundenzettel_debug.log');
+ini_set('error_log', __DIR__ . '/timesheet_email_debug.log');
 
-// JSON headers
 header('Content-Type: application/json');
 header('Cache-Control: no-cache, must-revalidate');
 
@@ -20,162 +19,138 @@ $response = [
     'debug' => []
 ];
 
-function debugLog($message) {
+/**
+ * Hilfsfunktion für Debug-Logs
+ */
+function debugLog($msg) {
     global $response;
-    $logMessage = date('Y-m-d H:i:s') . ' - ' . $message . "\n";
-    file_put_contents(__DIR__ . '/stundenzettel_debug.log', $logMessage, FILE_APPEND);
-    $response['debug'][] = $message;
+    $logEntry = date('Y-m-d H:i:s') . " - $msg\n";
+    file_put_contents(__DIR__ . '/timesheet_email_debug.log', $logEntry, FILE_APPEND);
+    $response['debug'][] = $msg;
 }
 
 try {
-    debugLog("Stundenzettel email handler started");
+    debugLog("Stundenzettel-E-Mail-Prozess gestartet");
 
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        throw new Exception('Invalid request method.');
+        throw new Exception('Ungültige Anfrage-Methode.');
     }
 
     if (!function_exists('mail')) {
-        throw new Exception('mail() function is not available.');
+        throw new Exception('Die PHP mail() Funktion ist auf diesem Server deaktiviert.');
     }
 
-    // ===============================
-    // GET FORM DATA
-    // ===============================
-    $name = isset($_POST['name']) ? trim($_POST['name']) : 'Unbekannter Mitarbeiter';
-    $customerEmail = isset($_POST['customer_email']) ? trim($_POST['customer_email']) : '';
-    $pdfBase64 = isset($_POST['pdf']) ? $_POST['pdf'] : '';
+    // ----------------- DATENERFASSUNG -----------------
+    $company     = $_POST['firma'] ?? '';
+    $employeeID  = $_POST['personalnummer'] ?? '';
+    $lastName    = $_POST['nachname'] ?? '';
+    $firstName   = $_POST['vorname'] ?? '';
+    $senderEmail = filter_var($_POST['email'] ?? '', FILTER_SANITIZE_EMAIL);
+    $month       = $_POST['monat'] ?? '';
+    $year        = $_POST['jahr'] ?? '';
 
-    $companyEmail = 'info@exotaxx.de';
-    $ccEmail = 'iince98@gmail.com';
+    $pdfBase64        = $_POST['pdf'] ?? ''; 
+    $signatureDataUrl = $_POST['signatureDataUrl'] ?? ''; 
 
-    debugLog("Form data received - Name: $name | Email: $customerEmail");
+    // Empfänger
+    $adminEmail = 'info@exotaxx.de';
+    $ccEmail    = 'iince98@gmail.com';
 
-    if (empty($customerEmail) || !filter_var($customerEmail, FILTER_VALIDATE_EMAIL)) {
-        throw new Exception('Eine gültige E-Mail-Adresse ist erforderlich.');
+    debugLog("Daten empfangen für: $lastName, $firstName (ID: $employeeID)");
+
+    if (empty($company) || empty($employeeID) || empty($lastName) || empty($firstName) || empty($senderEmail)) {
+        throw new Exception('Alle persönlichen Pflichtfelder müssen ausgefüllt sein.');
     }
 
+    if (!filter_var($senderEmail, FILTER_VALIDATE_EMAIL)) {
+        throw new Exception('Bitte geben Sie eine gültige E-Mail-Adresse an.');
+    }
+
+    // ----------------- PDF DEKODIERUNG -----------------
     if (empty($pdfBase64)) {
-        throw new Exception('PDF-Daten fehlen.');
+        throw new Exception('PDF-Daten fehlen in der Anfrage.');
     }
-
-    // Decode PDF
+    
+    if (strpos($pdfBase64, ',') !== false) {
+        $pdfBase64 = explode(',', $pdfBase64)[1];
+    }
+    
     $pdfData = base64_decode($pdfBase64);
     if ($pdfData === false) {
-        throw new Exception('Ungültige PDF-Daten.');
+        throw new Exception('Fehler beim Dekodieren der PDF-Daten.');
     }
+    debugLog("PDF erfolgreich dekodiert. Größe: " . strlen($pdfData) . " Bytes.");
 
-    debugLog("PDF decoded. Size: " . strlen($pdfData) . " bytes");
+    // ----------------- E-MAIL KONSTRUKTION -----------------
+    $fromName  = 'ExoTaxx GmbH - Zeiterfassung';
+    $fromEmail = 'noreply@exotaxx.de';
+    $subject   = "Neuer Stundenzettel eingereicht - $lastName $firstName";
+    
+    $boundary = md5(time() . uniqid());
 
-    // ===============================
-    // EMAIL CONFIG
-    // ===============================
-    $from_email = 'noreply@' . ($_SERVER['HTTP_HOST'] ?? 'exotaxx.de');
-    $from_name = 'ExoTaxx GmbH - Stundenzettel';
-
-    $boundary = md5(time() . rand());
-    $subject = 'Neuer Stundenzettel eingereicht - ' . $name;
-
-    $headers  = "From: $from_name <$from_email>\r\n";
-    $headers .= "Reply-To: $customerEmail\r\n";
+    // Header
+    $headers  = "From: $fromName <$fromEmail>\r\n";
+    $headers .= "Reply-To: $senderEmail\r\n";
     $headers .= "Cc: $ccEmail\r\n";
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
-    $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
+    $headers .= "X-Mailer: PHP/" . phpversion();
 
-    $toRecipients = $companyEmail . ", " . $customerEmail;
-
-    // ===============================
-    // EMAIL BODY (HTML)
-    // ===============================
-    $message  = "--$boundary\r\n";
-    $message .= "Content-Type: text/html; charset=UTF-8\r\n";
-    $message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
-
-    $htmlBody = "
+    // ----------------- E-MAIL TEXT (HTML) -----------------
+    $htmlContent = "
     <html>
-    <head>
-        <meta charset='UTF-8'>
-        <style>
-            body { font-family: Arial, sans-serif; padding:20px; color:#333; }
-            .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white; padding:20px; border-radius:8px; text-align:center; }
-            .content { background:#f8f9fa; padding:20px; margin-top:20px; border-radius:8px; border-left: 4px solid #667eea; }
-            .info { margin-bottom:10px; padding:10px; background:white; border-radius:5px; }
-            .info strong { color:#667eea; }
-        </style>
-    </head>
-    <body>
-        <div class='header'>
-            <h1>📅 Neuer Stundenzettel</h1>
+    <body style='font-family: Arial, sans-serif; color: #333;'>
+        <div style='background: #4e73df; color: white; padding: 20px; border-radius: 8px;'>
+            <h1>Stundenzettel Einreichung</h1>
         </div>
-        <div class='content'>
-            <div class='info'><strong>Mitarbeiter:</strong> " . htmlspecialchars($name) . "</div>
-            <div class='info'><strong>E-Mail:</strong> " . htmlspecialchars($customerEmail) . "</div>
-            <div class='info'><strong>Eingereicht am:</strong> " . date('d.m.Y H:i:s') . "</div>
-            <p>Das automatisch generierte Protokoll sowie die hochgeladenen Dokumente befinden sich im Anhang.</p>
+        <div style='padding: 20px; border: 1px solid #eee; border-radius: 8px; margin-top: 10px;'>
+            <p><strong>Firma:</strong> " . htmlspecialchars($company) . "</p>
+            <p><strong>Personalnummer:</strong> " . htmlspecialchars($employeeID) . "</p>
+            <p><strong>Name:</strong> " . htmlspecialchars("$firstName $lastName") . "</p>
+            <p><strong>Zeitraum:</strong> " . htmlspecialchars("$month $year") . "</p>
+            <hr style='border: 0; border-top: 1px solid #eee; margin: 20px 0;'>
+            <p>Der unterschriebene Stundenzettel wurde dieser E-Mail als PDF angehängt.</p>
+            <div style='margin-top: 20px;'>
+                <strong>Digitale Unterschrift:</strong><br>
+                <img src='$signatureDataUrl' alt='Unterschrift' style='max-width: 300px; border: 1px solid #ddd; margin-top: 10px; background: #fff;'>
+            </div>
         </div>
     </body>
-    </html>
-    ";
+    </html>";
 
-    $message .= $htmlBody . "\r\n\r\n";
+    $message = "--$boundary\r\n";
+    $message .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
+    $message .= $htmlContent . "\r\n\r\n";
 
-    // ===============================
-    // ATTACH GENERATED PDF
-    // ===============================
-    $safeName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $name);
-    $pdfFilename = "Stundenzettel_" . $safeName . "_" . date('Y-m-d') . ".pdf";
+    // ----------------- PDF ANHANG -----------------
+    $safeLastName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $lastName);
+    $pdfFilename  = "Stundenzettel_" . $safeLastName . "_" . date('Y-m-d') . ".pdf";
 
     $message .= "--$boundary\r\n";
     $message .= "Content-Type: application/pdf; name=\"$pdfFilename\"\r\n";
     $message .= "Content-Transfer-Encoding: base64\r\n";
     $message .= "Content-Disposition: attachment; filename=\"$pdfFilename\"\r\n\r\n";
     $message .= chunk_split(base64_encode($pdfData)) . "\r\n";
-
-    // ===============================
-    // ATTACH UPLOADED EXCEL/WORD FILES
-    // ===============================
-    if (isset($_FILES['attachments']) && is_array($_FILES['attachments']['name'])) {
-        foreach ($_FILES['attachments']['tmp_name'] as $key => $tmpName) {
-            if ($_FILES['attachments']['error'][$key] === UPLOAD_ERR_OK) {
-                $fileName = $_FILES['attachments']['name'][$key];
-                $fileType = $_FILES['attachments']['type'][$key] ?: 'application/octet-stream';
-                $fileContent = file_get_contents($tmpName);
-
-                $message .= "--$boundary\r\n";
-                $message .= "Content-Type: $fileType; name=\"$fileName\"\r\n";
-                $message .= "Content-Transfer-Encoding: base64\r\n";
-                $message .= "Content-Disposition: attachment; filename=\"$fileName\"\r\n\r\n";
-                $message .= chunk_split(base64_encode($fileContent)) . "\r\n";
-
-                debugLog("Attached file: $fileName");
-            }
-        }
-    }
-
     $message .= "--$boundary--";
 
-    debugLog("Sending email to: $toRecipients");
+    // ----------------- VERSAND -----------------
+    // Sendet an Admin und eine Kopie an den Mitarbeiter
+    $recipients = "$adminEmail, $senderEmail";
+    debugLog("Versandversuch an: $recipients");
 
-    $mailResult = @mail($toRecipients, $subject, $message, $headers);
-
-    if ($mailResult) {
-        debugLog("Email successfully sent.");
+    if (@mail($recipients, $subject, $message, $headers)) {
+        debugLog("E-Mail erfolgreich versendet.");
         $response['success'] = true;
-        $response['message'] = 'Stundenzettel erfolgreich gesendet!';
+        $response['message'] = 'Ihr Stundenzettel wurde erfolgreich versendet!';
     } else {
-        debugLog("mail() failed.");
-        throw new Exception('E-Mail konnte nicht gesendet werden.');
+        throw new Exception('Der Server konnte die E-Mail nicht versenden. Bitte kontaktieren Sie den Support.');
     }
 
 } catch (Exception $e) {
-    debugLog("ERROR: " . $e->getMessage());
+    debugLog("KRITISCHER FEHLER: " . $e->getMessage());
     $response['success'] = false;
-    $response['message'] = 'Fehler: ' . $e->getMessage();
+    $response['message'] = $e->getMessage();
 }
 
-// Additional Debug Info
-$response['debug'][] = "PHP Version: " . phpversion();
-$response['debug'][] = "Max Upload: " . ini_get('upload_max_filesize');
-
 echo json_encode($response, JSON_PRETTY_PRINT);
-exit;
