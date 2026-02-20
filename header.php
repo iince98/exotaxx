@@ -125,6 +125,12 @@
                                                 <li>
                                                     <a href="kuendigungsformular.php">Abmeldung</a>
                                                 </li>
+                                                <li>
+                                                    <a href="stundenzettel.php">Stundenzettel</a>
+                                                </li>
+                                                <li>
+                                                    <a href="vollmacht.php">Vollmacht</a>
+                                                </li>
                                             </ul>
                                         </li>
                                     
